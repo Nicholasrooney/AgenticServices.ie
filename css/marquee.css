@@ -1,0 +1,296 @@
+/* ============================================================
+   Agentic Services — Brand Logo Marquee (light mockup)
+   Ultra-premium right-to-left logo strip. Logos rendered as
+   their real navbar wordmarks; edges fade as they enter/exit.
+   ============================================================ */
+
+.logo-marquee {
+  position: relative;
+  padding-block: clamp(1.5rem, 3vw, 2.75rem);
+  background: var(--canvas);
+  border-top: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
+  overflow: hidden;
+}
+
+/* Reveal-on-scroll: pure CSS scroll-driven animation. The strip stays
+   hidden until it scrolls into view, then fades up. Falls back to fully
+   visible where view timelines or motion aren't supported, so it can
+   never get stuck invisible. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .logo-marquee {
+      animation: lm-reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 70%;
+    }
+  }
+}
+@keyframes lm-reveal {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.logo-marquee__head {
+  text-align: center;
+  margin-bottom: clamp(1rem, 2vw, 1.75rem);
+}
+
+/* Viewport clips the track and feathers both edges so logos
+   fade in and out as they scroll on/off screen. */
+.logo-marquee__viewport {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    #000 14%,
+    #000 86%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    #000 14%,
+    #000 86%,
+    transparent 100%
+  );
+}
+
+/* The moving track. JS clones the set so the second half is an
+   exact copy of the first; translating -50% loops seamlessly. */
+.logo-marquee__track {
+  display: flex;
+  width: max-content;
+  align-items: center;
+  will-change: transform;
+  animation: lm-scroll 38s linear infinite;
+}
+@keyframes lm-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* Pause for a closer look. */
+.logo-marquee__viewport:hover .logo-marquee__track {
+  animation-play-state: paused;
+}
+
+/* ---- Individual logo slot ---- */
+.brandmark {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.85rem;
+  height: 56px;
+  padding-inline: clamp(1.75rem, 4vw, 3.75rem);
+  white-space: nowrap;
+  opacity: 0.8;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.brandmark:hover {
+  opacity: 1;
+  transform: translateY(-2px);
+}
+
+/* Real navbar logo art (PNG/WEBP), transparent on white.
+   Each brand gets its own optical height so wildly different
+   aspect ratios read at a consistent visual weight. */
+.bm-img {
+  flex: 0 0 auto;
+  display: block;
+  width: auto;
+  object-fit: contain;
+}
+.bm-img--mise { height: 46px; }   /* graffiti wordmark */
+.bm-img--bus  { height: 40px; }   /* gold coach line-art */
+.bm-img--dw   { height: 44px; }   /* blue house mark */
+.bm-img--vw   { height: 30px; }   /* long title + tagline */
+.bm-img--cbt  { height: 52px; }   /* stacked CBT in CPT */
+.bm-img--maxim{ height: 44px; }   /* stacked MAXIM/MOTORS wordmark */
+.bm-img--matcha{ height: 52px; }  /* round matcha-master mascot */
+
+/* ---- PrivateBusHire Ireland — Barlow Condensed, navy + gold ---- */
+.bm-pbh {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 1.6rem;
+  line-height: 1;
+  color: #0a1628;
+}
+.bm-pbh span { color: #f5c518; }
+
+/* ---- MISE Official — editorial monochrome wordmark ---- */
+/* "MISE" already lives in the graffiti logo, so the wordmark to its
+   right is just a refined "Official" tag — tracked-out caps with a
+   hairline divider, playing off the loose graffiti for contrast. */
+.bm-mise {
+  align-self: center;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 500;
+  font-size: 0.72rem;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  line-height: 1;
+  color: #4a5059;
+  padding-left: 0.85rem;
+  border-left: 1px solid #d9dce0;
+  text-indent: 0.42em; /* offset trailing tracking so it stays centered */
+}
+
+/* ---- /DRIVEWAYS Ireland — Big Shoulders, blue slash + mono tag ---- */
+.bm-dw {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  font-family: 'Big Shoulders Display', sans-serif;
+  font-weight: 800;
+  font-size: 1.75rem;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  color: #14171a;
+}
+.bm-dw__slash { color: #2b6cdf; }
+.bm-dw small {
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 600;
+  font-size: 0.6rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #565c63;
+}
+
+/* ---- Vision Wellbeing — Playfair slate + sandstone tagline ---- */
+.bm-vw {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.32rem;
+  line-height: 1;
+}
+.bm-vw__name {
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+  font-size: 1.5rem;
+  color: #2f4a4d;
+}
+.bm-vw__tag {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  font-size: 0.58rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: #b89c7a;
+}
+
+/* ---- SoundSystemHire.ie — Outfit, navy + red accent + .ie tag ---- */
+.bm-ssh {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  letter-spacing: -0.015em;
+  line-height: 1;
+  color: #0f1729;
+}
+.bm-ssh span { color: #e63946; }
+.bm-ssh small {
+  font-weight: 600;
+  font-size: 0.85em;
+  color: #5b626b;
+}
+
+/* ---- CBTinCPT — real logo masked sage + navbar "CBT in CPT" title ---- */
+/* The brand's own mark (LOGO+FINAL.webp) is pink/orange; on the dark
+   site it's mask-tinted (cream in the nav, sage at the hero top). We
+   reuse that hero treatment in deep sage so it reads on white. */
+.bm-cbt-mark {
+  flex: 0 0 auto;
+  display: inline-block;
+  width: 46px;
+  height: 52px;
+  background-color: #5e8e72;
+  -webkit-mask: url("../images/brands/cbtincpt.webp") no-repeat center / contain;
+  mask: url("../images/brands/cbtincpt.webp") no-repeat center / contain;
+}
+.bm-cbt {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.32rem;
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  color: #3f5d4f;
+}
+.bm-cbt span {
+  font-family: 'Playfair Display', serif;
+  font-weight: 400;
+  font-style: italic;
+  font-size: 0.78em;
+  letter-spacing: 0;
+  text-transform: none;
+  color: #7baa8e;
+}
+
+/* ---- The Matcha Masters — navbar logo replica (mascot + Fraunces wordmark) ---- */
+/* Mirrors the site's own .logo: Fraunces 900, tight tracking, deep green ink. */
+.bm-matcha {
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 900;
+  font-size: 1.3rem;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: #16271c;
+  white-space: nowrap;
+}
+
+/* ============================================================
+   "Our tools" strip — second marquee beneath the founders.
+   Real third-party logos (brand-colour) + a clean name label.
+   Counter-rotates against the brand strip for a premium feel.
+   ============================================================ */
+.logo-marquee--tools .logo-marquee__track {
+  animation-direction: reverse;
+}
+
+.toolmark {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  height: 44px;
+  padding-inline: clamp(1.4rem, 3vw, 2.75rem);
+  white-space: nowrap;
+  opacity: 0.85;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.toolmark:hover {
+  opacity: 1;
+  transform: translateY(-2px);
+}
+.toolmark__logo {
+  flex: 0 0 auto;
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  display: block;
+}
+.toolmark__name {
+  font-family: 'Work Sans', sans-serif;
+  font-weight: 500;
+  font-size: 0.95rem;
+  letter-spacing: -0.005em;
+  color: #353b44;
+}
+
+/* ---- Reduced motion: hold the strip still and fully visible ---- */
+@media (prefers-reduced-motion: reduce) {
+  .logo-marquee__track { animation: none; }
+  .logo-marquee { opacity: 1; transform: none; }
+}

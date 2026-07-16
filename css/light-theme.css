@@ -1,0 +1,237 @@
+/* ============================================================
+   Agentic Services — LIGHT THEME override
+   Loaded AFTER styles.css. Flips the dark token ladder to a
+   white/light palette so the same components render on white.
+   Quick mockup only — not the production theme.
+   ============================================================ */
+
+:root {
+  /* Surface ladder — inverted to light */
+  --canvas: #ffffff;
+  --surface-1: #f6f7f9;
+  --surface-2: #eef0f3;
+  --surface-3: #e7eaef;
+  --hairline: #e3e6ea;
+  --hairline-strong: #cdd2d9;
+
+  /* Ink — inverted to dark text on light */
+  --ink: #0e1116;
+  --ink-muted: #353b44;
+  --ink-subtle: #5b626b;
+  --ink-tertiary: #888e97;
+
+  /* Brand green kept; nudge default to the deeper shade for
+     contrast on white, hover stays vivid. */
+  --primary: #16a34a;
+  --primary-hover: #22c55e;
+  --primary-focus: #15803d;
+  --on-primary: #ffffff;
+}
+
+/* Hero contrast overlay was a dark radial vignette for white text
+   on black. Flip to a soft white wash so dark hero text stays legible. */
+.hero::after {
+  background: radial-gradient(ellipse at 30% 50%,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(255, 255, 255, 0.55) 60%,
+    transparent 80%) !important;
+}
+
+/* Vanta net is faint; lift it slightly so the green mesh reads on white. */
+.hero__vanta { opacity: 0.5; }
+
+/* Soften the heavy dark drop-shadows that were tuned for a black canvas. */
+.pricing-card,
+.pricing-card--recommended,
+.work-card {
+  box-shadow: 0 18px 40px -28px rgba(15, 23, 42, 0.25) !important;
+}
+
+/* ------------------------------------------------------------
+   Combined founders block — Nick & Jack side by side with the
+   shared "We started…" copy sitting between the two portraits.
+
+   The DOM is authored in the mobile "sandwich" order:
+     Nick photo → Nick title → copy → Jack title → Jack photo
+   Desktop remaps it into three columns (portrait + title in the
+   outer columns, copy spanning the middle) via grid-template-areas.
+   ------------------------------------------------------------ */
+.founders-duo__inner {
+  display: grid;
+  align-items: center;
+  gap: clamp(1.25rem, 3vw, 2.25rem) clamp(2rem, 5vw, 4.5rem);
+  grid-template-columns: auto minmax(260px, 1fr) auto;
+  grid-template-areas:
+    "nphoto copy jphoto"
+    "ntitle copy jtitle";
+}
+.founders-duo__photo--nick { grid-area: nphoto; }
+.founders-duo__photo--jack { grid-area: jphoto; }
+.founders-duo__title--nick { grid-area: ntitle; }
+.founders-duo__title--jack { grid-area: jtitle; }
+.founders-duo__copy        { grid-area: copy; }
+
+/* Slightly smaller portraits so three columns breathe. Photos sit at
+   the bottom of the top row, titles at the top of the bottom row, so
+   each name reads directly beneath its portrait. */
+.founders-duo__photo.founder__image-wrap {
+  width: clamp(200px, 22vw, 320px);
+  align-self: end;
+  justify-self: center;
+}
+.founders-duo__title {
+  align-self: start;
+  text-align: center;
+}
+.founders-duo__title .founder__name { margin-top: 0; }
+
+/* Shared copy, centered between the two portraits. */
+.founders-duo__copy {
+  max-width: 460px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Jack's portrait keeps its ~15% top-anchored crop. */
+.founders-duo__photo--jack .founder__photo img {
+  transform: scale(1.15);
+  transform-origin: top center;
+}
+
+/* Narrow devices: collapse to a single-column "sandwich" in DOM order —
+   Nick photo, Nick title, copy, Jack title, Jack photo. */
+@media (max-width: 768px) {
+  .founders-duo__inner {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    grid-template-areas:
+      "nphoto"
+      "ntitle"
+      "copy"
+      "jtitle"
+      "jphoto";
+  }
+  .founders-duo__copy {
+    margin-block: clamp(1rem, 5vw, 2.25rem);
+  }
+}
+
+/* ------------------------------------------------------------
+   Services collage — "Four ways we compound your growth".
+   A centred 2×2 of cards, each pairing its copy with a dedicated
+   slot for isometric green line-art (.svc-card__art). The right
+   column is nudged down (via margin, not transform, so the GSAP
+   reveal that animates transform doesn't undo it) for a collage
+   rhythm. Keeps .bento-grid / .card so the existing draw-in,
+   stagger-reveal and mobile-glow JS keep working.
+   ------------------------------------------------------------ */
+.services-overview .eyebrow {
+  display: block;
+  text-align: center;
+}
+.services-overview .section-title {
+  text-align: center;
+}
+
+.bento-grid.svc-collage {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1.25rem, 2.5vw, 2rem);
+  max-width: 920px;
+  margin-inline: auto;
+  margin-top: clamp(2rem, 4vw, 3rem);
+  align-items: start;
+}
+/* Drop the right column for an arranged, off-grid collage feel. */
+.bento-grid.svc-collage > .svc-card:nth-child(even) {
+  margin-top: clamp(1.5rem, 4vw, 3rem);
+}
+
+.svc-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+/* ---- Isometric art slot (the 4 spaces) ---- */
+.svc-card__art {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-md);
+  border: 1px dashed var(--hairline-strong);
+  background-color: var(--surface-2);
+  background-image:
+    repeating-linear-gradient( 30deg, rgba(22, 163, 74, 0.05) 0 1px, transparent 1px 24px),
+    repeating-linear-gradient(-30deg, rgba(22, 163, 74, 0.05) 0 1px, transparent 1px 24px);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+.card--featured .svc-card__art {
+  background-color: var(--surface-3);
+}
+
+/* When the real art is dropped in, it fills the slot and the hint hides. */
+.svc-card__art img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+.svc-card__art:has(img) {
+  border-style: solid;
+  background-image: none;
+}
+.svc-card__art:has(img) .svc-card__art-ph {
+  display: none;
+}
+
+.svc-card__art-ph {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  opacity: 0.55;
+  transition: opacity 0.3s ease;
+}
+.card:hover .svc-card__art-ph,
+.card.is-glowing .svc-card__art-ph {
+  opacity: 0.8;
+}
+.svc-card__art-ph svg {
+  width: clamp(60px, 9vw, 86px);
+  height: auto;
+}
+.svc-card__art-ph svg path {
+  stroke: var(--primary);
+  stroke-width: 2.5;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+.svc-card__art-ph em {
+  font-style: normal;
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-tertiary);
+}
+
+.svc-card__body {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---- Narrow devices: single centred column, no stagger ---- */
+@media (max-width: 768px) {
+  .bento-grid.svc-collage {
+    grid-template-columns: 1fr;
+    max-width: 440px;
+  }
+  .bento-grid.svc-collage > .svc-card:nth-child(even) {
+    margin-top: 0;
+  }
+}

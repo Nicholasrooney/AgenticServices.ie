@@ -1,0 +1,5 @@
+# Temporary dev deployment — keep search engines out.
+# IMPORTANT: replace with an allow-all robots.txt (+ sitemap) when
+# launching on the real agenticservices.ie domain.
+User-agent: *
+Disallow: /
