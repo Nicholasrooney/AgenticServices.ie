@@ -31,7 +31,7 @@
   }
 
   function renderGrid() {
-    const list = PRODUCTS.filter(p =>
+    const list = PRODUCTS.filter(p => p.category === 'cookie').filter(p =>
       filter === 'all' ||
       (filter === 'vegan' && p.tags.includes('vegan')) ||
       (filter === 'nut-free' && !p.tags.includes('nuts')));
@@ -47,8 +47,20 @@
       </article>`).join('') || '<p>No cookies match that filter today.</p>';
   }
 
+  function renderDrinks() {
+    const el = $('#drinkList'); if (!el) return;
+    el.innerHTML = PRODUCTS.filter(p => p.category === 'drink').map(p => `
+      <li class="drink"><span class="drink-name">${p.name}</span><span class="drink-price">${euro(p.price)}</span><span data-foot="${p.id}">${cardFoot(p)}</span></li>`).join('');
+  }
+
   document.querySelectorAll('.chip').forEach(ch => ch.addEventListener('click', () => {
-    document.querySelectorAll('.chip').forEach(c => c.classList.toggle('is-on', c === ch));
+    function renderDrinks() {
+    const el = $('#drinkList'); if (!el) return;
+    el.innerHTML = PRODUCTS.filter(p => p.category === 'drink').map(p => `
+      <li class="drink"><span class="drink-name">${p.name}</span><span class="drink-price">${euro(p.price)}</span><span data-foot="${p.id}">${cardFoot(p)}</span></li>`).join('');
+  }
+
+  document.querySelectorAll('.chip').forEach(c => c.classList.toggle('is-on', c === ch));
     filter = ch.dataset.filter;
     renderGrid();
   }));
@@ -85,7 +97,7 @@
     $('#bagList').innerHTML = entries.map(([id, q]) => {
       const p = byId[id];
       return `<li class="bag-item">
-        <img src="${p.image}" alt="">
+        <img src="${p.image || 'images/latte-and-boxes.webp'}" alt="">
         <div><div class="bag-item-name">${p.name}</div><div class="bag-item-price">${euro(p.price)} × ${q} = ${euro(p.price * q)}</div></div>
         <div class="stepper"><button data-dec="${id}" aria-label="Remove one">−</button><output>${q}</output><button data-inc="${id}" aria-label="Add one">+</button></div>
       </li>`;
@@ -221,5 +233,6 @@
   function toast(msg) { const t = $('#toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(tt); tt = setTimeout(() => t.classList.remove('show'), 1600); }
 
   renderGrid();
+  renderDrinks();
   update();
 })();

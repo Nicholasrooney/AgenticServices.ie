@@ -23,5 +23,5 @@ Plain HTML/CSS/JS. No framework and no build step except the products file.
 ## Sources (gathered 11 Nov 2026)
 - Menu, hours, address, Instagram and press mentions: cookieboy.ie
 - Rating (4.9 from 377 reviews), phone number and reviews: the Google Maps business profile
-- €4.50 per cookie: mentioned in a Google review. **Confirm with the shop.**
-- Cookie photos: cookieboy.ie
+- Prices: the shop's menu board (Google Maps photo; cookies €4.50, drinks €2–€4). The S'more photo is a best guess, so swap it for a real one.
+- Cookie photos: cookieboy.ie, plus customer photos from the Google Maps listing
