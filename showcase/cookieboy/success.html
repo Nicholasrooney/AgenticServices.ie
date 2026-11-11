@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order confirmed | Cookieboy</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&family=Fragment+Mono&family=DM+Sans:opsz,wght@9..40,400;9..40,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main class="modal" style="position:static;min-height:100vh;background:var(--dough)">
+    <div class="modal-card">
+      <div class="modal-cookie" aria-hidden="true">🍪</div>
+      <h2>Payment received!</h2>
+      <p id="when">Your cookies are booked in. See you at 20 Stephen Street Lower.</p>
+      <p class="order-no">A receipt is on its way to your email.</p>
+      <a class="btn btn-dark" href="./">Back to Cookieboy</a>
+    </div>
+  </main>
+  <script>
+    try { localStorage.removeItem('cookieboy-bag'); } catch (e) {}
+    const p = new URLSearchParams(location.search).get('pickup');
+    if (p) document.getElementById('when').textContent = 'Collect ' + p + ' at 20 Stephen Street Lower, Dublin 2.';
+  </script>
+</body>
+</html>

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cookieboy — Korean Cookies in Dublin | Order for Collection</title>
+  <meta name="description" content="Homemade Korean cookies, freshly baked at 20 Stephen Street Lower, Dublin 2. Order online and collect.">
+  <!-- Concept build for a pitch: keep out of search results until it goes live on the shop's own domain -->
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍪</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&family=Fragment+Mono&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div class="concept-bar">
+    Concept website by <a href="/" target="_top">Agentic Services</a>. Not the official Cookieboy site, and no real payments are taken.
+  </div>
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a href="#top" class="wordmark" aria-label="Cookieboy home">Cookie<span>boy</span></a>
+      <nav class="main-nav" aria-label="Main">
+        <a href="#cookies">Cookies</a>
+        <a href="#reviews">Reviews</a>
+        <a href="#visit">Visit</a>
+      </nav>
+      <button class="bag-btn" id="bagBtn" aria-label="Open your bag">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7h12l-1 13H7L6 7z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>
+        <span>Bag</span>
+        <span class="bag-count" id="bagCount">0</span>
+      </button>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">20 Stephen Street Lower · Dublin 2</p>
+          <h1 class="hero-title">Korean<br>cookies,<br><em>baked fresh.</em></h1>
+          <p class="hero-lede">Homemade Korean cookies in the heart of Dublin. Crisp outside, gooey inside, in small batches every day. They sell out, so order ahead and skip the queue.</p>
+          <div class="hero-actions">
+            <a href="#cookies" class="btn btn-dark">Order for collection</a>
+            <a href="#visit" class="btn btn-ghost">Find the shop</a>
+          </div>
+          <div class="hero-rating">
+            <span class="stars" aria-hidden="true">★★★★★</span>
+            <span><strong>4.9</strong> from 377 Google reviews</span>
+          </div>
+        </div>
+        <div class="hero-art">
+          <div class="hero-photo">
+            <img src="images/pecan-dark-chocolate.webp" alt="Pecan dark chocolate cookie broken open" width="1080" height="1350">
+          </div>
+          <div class="sticker sticker-a">#NoCookie<br>NoLife</div>
+          <div class="sticker sticker-b">Fresh<br>today</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TICKER -->
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker-track">
+        <span>Pecan Dark Chocolate</span><b>✦</b><span>Matcha Macadamia</span><b>✦</b><span>Blueberry Cheesecake</span><b>✦</b><span>Ruby Pistachio</span><b>✦</b><span>Vegan Biscoff</span><b>✦</b><span>Walnut Double Choc</span><b>✦</b>
+        <span>Pecan Dark Chocolate</span><b>✦</b><span>Matcha Macadamia</span><b>✦</b><span>Blueberry Cheesecake</span><b>✦</b><span>Ruby Pistachio</span><b>✦</b><span>Vegan Biscoff</span><b>✦</b><span>Walnut Double Choc</span><b>✦</b>
+      </div>
+    </div>
+
+    <!-- AS SEEN ON -->
+    <section class="seen">
+      <div class="wrap seen-inner">
+        <p class="seen-label">As seen on</p>
+        <ul class="seen-list">
+          <li>TikTok</li><li>Lovin Dublin</li><li>98FM</li><li>Dublin Town</li><li>HappyCow</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SHOP -->
+    <section class="shop" id="cookies">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">Click &amp; collect</p>
+          <h2>Pick your cookies</h2>
+          <p class="section-sub">Freshly baked every day. Choose your cookies, pick a collection time, pay online, and they're boxed and waiting at the counter.</p>
+        </div>
+        <div class="filters" role="group" aria-label="Filter cookies">
+          <button class="chip is-on" data-filter="all">All</button>
+          <button class="chip" data-filter="vegan">Vegan</button>
+          <button class="chip" data-filter="nut-free">No nuts</button>
+        </div>
+        <div class="grid" id="productGrid" aria-live="polite"></div>
+        <p class="shop-note">Recipes change regularly, and specials like the s'more cookie come and go. Allergens: ask in store.</p>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="how">
+      <div class="wrap how-grid">
+        <div class="how-step"><span class="how-num">01</span><h3>Choose</h3><p>Add your cookies to the bag.</p></div>
+        <div class="how-step"><span class="how-num">02</span><h3>Pick a time</h3><p>Collection today or in the next two days, in 15-minute slots.</p></div>
+        <div class="how-step"><span class="how-num">03</span><h3>Pay &amp; collect</h3><p>Pay securely online, then skip the queue at Stephen Street.</p></div>
+      </div>
+    </section>
+
+    <!-- REVIEWS -->
+    <section class="reviews" id="reviews">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">Google reviews</p>
+          <h2>Worth the queue</h2>
+          <p class="section-sub"><span class="stars" aria-hidden="true">★★★★★</span> <strong>4.9</strong> average from 377 reviews</p>
+        </div>
+        <div class="review-grid">
+          <figure class="review">
+            <div class="stars" aria-label="5 stars">★★★★★</div>
+            <blockquote>So crispy on the outside and creamy on the inside! We ordered the matcha macadamia white chocolate and pistachio cranberry ruby chocolate, and both were so good. The matcha flavour was rich and intense …</blockquote>
+            <figcaption>Mayu K. · Google</figcaption>
+          </figure>
+          <figure class="review">
+            <div class="stars" aria-label="5 stars">★★★★★</div>
+            <blockquote>When I travelled to Dublin, visiting Cookie Boy was on the top of my list! There is a reason that you will always see a line outside, the decadent warm cookies are always worth the wait.</blockquote>
+            <figcaption>Jennifer C. · Google</figcaption>
+          </figure>
+          <figure class="review">
+            <div class="stars" aria-label="5 stars">★★★★★</div>
+            <blockquote>Best cookie in Dublin by far! … It's a small place and very popular so if you want a specific cookie you have to go early before they run out! … They also do good coffee and matcha!</blockquote>
+            <figcaption>Pierre M. · Google</figcaption>
+          </figure>
+          <figure class="review">
+            <div class="stars" aria-label="5 stars">★★★★★</div>
+            <blockquote>Super delicious! Honestly one of the yummiest cookies I've had in a while. Freshly baked, warm, soft, and just so good. The team were also kind and friendly.</blockquote>
+            <figcaption>Joey · Google</figcaption>
+          </figure>
+          <figure class="review">
+            <div class="stars" aria-label="5 stars">★★★★★</div>
+            <blockquote>Saw this on social media and had to try it. They were so worth it! … After the whole day (like 12 hours), it was still soft and moist! One of the best cookies I've had.</blockquote>
+            <figcaption>Brandi G. · Google</figcaption>
+          </figure>
+          <figure class="review">
+            <div class="stars" aria-label="5 stars">★★★★★</div>
+            <blockquote>Absolutely loved this place! The cookies were amazing and everything we tried was so delicious. What made the experience even better was how incredibly kind and welcoming the staff were.</blockquote>
+            <figcaption>İdal · Google</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- VISIT -->
+    <section class="visit" id="visit">
+      <div class="wrap visit-grid">
+        <div class="visit-info">
+          <p class="eyebrow">Come say hi</p>
+          <h2>Visit the shop</h2>
+          <address>
+            20 Stephen Street Lower<br>Dublin 2, D02 DT04
+          </address>
+          <table class="hours" aria-label="Opening hours">
+            <tbody>
+              <tr data-days="1,2,3,4,5"><th>Mon – Fri</th><td>8:00am – 5:00pm</td></tr>
+              <tr data-days="6"><th>Saturday</th><td>9:00am – 6:00pm</td></tr>
+              <tr data-days="0"><th>Sunday</th><td>10:00am – 5:00pm</td></tr>
+            </tbody>
+          </table>
+          <p class="open-now" id="openNow"></p>
+          <div class="visit-actions">
+            <a class="btn btn-dark" href="https://maps.app.goo.gl/QDb6395DUGsJBYWUA" target="_blank" rel="noopener">Directions</a>
+            <a class="btn btn-ghost" href="tel:+353833797903">083 379 7903</a>
+            <a class="btn btn-ghost" href="https://www.instagram.com/cookieboydublin/" target="_blank" rel="noopener">Instagram</a>
+          </div>
+          <p class="visit-note">Coffee, matcha and hot chocolate to go with your cookie. Seats inside and tables outside.</p>
+        </div>
+        <div class="map">
+          <iframe title="Map of Cookieboy, 20 Stephen Street Lower" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+            src="https://maps.google.com/maps?q=Cookieboy,+20+Stephen+Street+Lower,+Dublin+2&z=16&output=embed"></iframe>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <a href="#top" class="wordmark wordmark-sm">Cookie<span>boy</span></a>
+      <p>Korean cookies · 20 Stephen Street Lower, Dublin 2</p>
+      <p class="footer-credit">Concept site built by <a href="/" target="_top">Agentic Services</a></p>
+    </div>
+  </footer>
+
+  <!-- BAG DRAWER -->
+  <div class="scrim" id="scrim" hidden></div>
+  <aside class="drawer" id="drawer" aria-label="Your bag" aria-hidden="true">
+    <div class="drawer-head">
+      <h2>Your bag</h2>
+      <button class="icon-btn" id="closeBag" aria-label="Close bag">✕</button>
+    </div>
+
+    <div class="drawer-body">
+      <div id="bagEmpty" class="bag-empty">
+        <p>Your bag is empty.</p>
+        <a href="#cookies" class="btn btn-dark" data-close>Choose cookies</a>
+      </div>
+
+      <ul class="bag-list" id="bagList"></ul>
+
+      <form id="checkoutForm" class="checkout" novalidate hidden>
+        <fieldset>
+          <legend>Collection time</legend>
+          <div class="row-2">
+            <label>Day
+              <select id="pickupDay" required></select>
+            </label>
+            <label>Time
+              <select id="pickupTime" required></select>
+            </label>
+          </div>
+          <p class="hint" id="slotHint"></p>
+        </fieldset>
+        <fieldset>
+          <legend>Your details</legend>
+          <label>Name <input id="custName" autocomplete="name" required></label>
+          <label>Mobile <input id="custPhone" type="tel" autocomplete="tel" required placeholder="08x xxx xxxx"></label>
+          <label>Email <input id="custEmail" type="email" autocomplete="email" required placeholder="for your receipt"></label>
+          <label>Note for the bakers <span class="opt">(optional)</span><textarea id="custNote" rows="2" maxlength="200"></textarea></label>
+        </fieldset>
+        <p class="form-error" id="formError" role="alert"></p>
+      </form>
+    </div>
+
+    <div class="drawer-foot" id="drawerFoot" hidden>
+      <div class="total-row"><span>Total</span><strong id="bagTotal">€0.00</strong></div>
+      <button class="btn btn-dark btn-block" id="payBtn" form="checkoutForm" type="submit">Pay &amp; collect</button>
+      <p class="secure">Card, Apple Pay &amp; Google Pay by <strong>Stripe</strong></p>
+    </div>
+  </aside>
+
+  <!-- CONFIRMATION -->
+  <div class="modal" id="confirmModal" hidden role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
+    <div class="modal-card">
+      <div class="modal-cookie" aria-hidden="true">🍪</div>
+      <h2 id="confirmTitle">Order confirmed!</h2>
+      <p class="order-no">Order <strong id="confirmNo"></strong></p>
+      <p id="confirmWhen"></p>
+      <ul id="confirmItems" class="confirm-items"></ul>
+      <p class="demo-flag" id="demoFlag">Demo order: no card was charged.</p>
+      <button class="btn btn-dark" id="confirmClose">Done</button>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/store-config.js"></script>
+  <script src="js/products.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

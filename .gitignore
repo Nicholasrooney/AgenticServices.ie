@@ -1,3 +1,7 @@
 *.zip
 .DS_Store
 Thumbs.db
+
+# Stripe secrets for showcase checkouts: never commit
+stripe-secret.php
+**/stripe-secret.php

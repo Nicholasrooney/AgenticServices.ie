@@ -1,0 +1,65 @@
+/* AUTO-GENERATED from data/products.json by tools/build-products.js. Do not edit by hand. */
+window.COOKIEBOY_PRODUCTS = {
+  "currency": "eur",
+  "note": "Source of truth for prices. checkout.php reads this file, so prices sent from the browser are never trusted. Prices in cents.",
+  "products": [
+    {
+      "id": "pecan-dark-chocolate",
+      "name": "Pecan Dark Chocolate",
+      "desc": "Toasted pecans folded through dark chocolate. Crisp edge, gooey middle.",
+      "price": 450,
+      "image": "images/pecan-dark-chocolate.webp",
+      "tags": [
+        "nuts"
+      ]
+    },
+    {
+      "id": "matcha-macadamia",
+      "name": "Matcha, Macadamia, White Chocolate",
+      "desc": "Rich, intense matcha with buttery macadamia and white chocolate.",
+      "price": 450,
+      "image": "images/matcha-macadamia.webp",
+      "tags": [
+        "nuts"
+      ]
+    },
+    {
+      "id": "blueberry-cheesecake",
+      "name": "Blueberry Cheesecake",
+      "desc": "A soft cookie cup filled with blueberry cheesecake.",
+      "price": 450,
+      "image": "images/blueberry-cheesecake.webp",
+      "tags": []
+    },
+    {
+      "id": "ruby-pistachio",
+      "name": "Ruby Chocolate, Pistachio, Cranberries",
+      "desc": "Pink ruby chocolate, pistachio and tart cranberries.",
+      "price": 450,
+      "image": "images/ruby-pistachio.webp",
+      "tags": [
+        "nuts"
+      ]
+    },
+    {
+      "id": "vegan-biscoff",
+      "name": "Vegan Biscoff",
+      "desc": "Fully plant-based, loaded with Biscoff crumb and spread.",
+      "price": 450,
+      "image": "images/vegan-biscoff.webp",
+      "tags": [
+        "vegan"
+      ]
+    },
+    {
+      "id": "walnut-dark-milk",
+      "name": "Walnut, Dark Chocolate, Milk Chocolate",
+      "desc": "Walnuts with two kinds of chocolate. A proper chocolate-chip cookie.",
+      "price": 450,
+      "image": "images/walnut-dark-milk.webp",
+      "tags": [
+        "nuts"
+      ]
+    }
+  ]
+};
