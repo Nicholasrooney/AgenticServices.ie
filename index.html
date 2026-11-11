@@ -20,8 +20,10 @@
 
   <link rel="canonical" href="https://agenticservices.ie/">
 
-  <!-- Favicon (inline SVG) -->
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23010102'/><text x='6' y='24' font-family='sans-serif' font-weight='700' font-size='22' fill='%2322c55e'>A</text></svg>">
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -48,11 +50,6 @@
 <!-- Skip to content -->
 <a href="#main" class="skip-link">Skip to content</a>
 
-<!-- Preloader -->
-<div class="preloader">
-  <div class="preloader__wordmark"><span class="preloader__typed"></span><span class="preloader__counter"></span><span class="preloader__cursor"></span></div>
-</div>
-
 <!-- Barba wrapper -->
 <div data-barba="wrapper">
 
@@ -63,8 +60,8 @@
       <ul class="nav__links">
         <li><a href="index.html" class="nav__link nav__link--active">Home</a></li>
         <li><a href="services.html" class="nav__link">Services</a></li>
-        <li><a href="work.html" class="nav__link">Work</a></li>
-        <li><a href="pricing.html" class="nav__link">Pricing</a></li>
+        <!-- page temporarily hidden (2026-07-27): <li><a href="work.html" class="nav__link">Work</a></li> -->
+        <!-- page temporarily hidden (2026-07-27): <li><a href="pricing.html" class="nav__link">Pricing</a></li> -->
         <li><a href="tapreview/" class="nav__link" data-barba-prevent>TapReview</a></li>
         <li><a href="contact.html" class="nav__link">Contact</a></li>
       </ul>
@@ -83,8 +80,8 @@
     </button>
     <a href="index.html" class="mobile-menu__link">Home</a>
     <a href="services.html" class="mobile-menu__link">Services</a>
-    <a href="work.html" class="mobile-menu__link">Work</a>
-    <a href="pricing.html" class="mobile-menu__link">Pricing</a>
+    <!-- page temporarily hidden (2026-07-27): <a href="work.html" class="mobile-menu__link">Work</a> -->
+    <!-- page temporarily hidden (2026-07-27): <a href="pricing.html" class="mobile-menu__link">Pricing</a> -->
     <a href="tapreview/" class="mobile-menu__link" data-barba-prevent>TapReview</a>
     <a href="contact.html" class="mobile-menu__link">Contact</a>
     <a href="contact.html" class="btn-primary" style="margin-top: auto;">Talk to us</a>
@@ -103,7 +100,8 @@
           <p class="hero__sub">Websites, SEO, AI and media, handled end to end. You don't lift a finger.</p>
           <div class="hero__actions">
             <a href="contact.html" class="btn-primary">Talk to us</a>
-            <a href="work.html" class="btn-secondary">See our work</a>
+            <!-- points at the on-page portfolio while work.html is hidden -->
+            <a href="#work-preview" class="btn-secondary">See our work</a>
           </div>
         </div>
       </section>
@@ -217,27 +215,46 @@
         <div class="logo-marquee__head">
           <span class="eyebrow">Our tools</span>
         </div>
-        <div class="logo-marquee__viewport">
-          <div class="logo-marquee__track" data-marquee-track>
+        <!-- Three rows, all travelling left-to-right, each started at a
+             different phase (data-marquee-offset) so the columns never
+             line up and the block reads as a woven grid rather than a
+             single repeating band. -->
+        <div class="logo-marquee__rows">
 
-            <div class="toolmark"><img class="toolmark__logo" src="images/tools/claude.svg" alt="" aria-hidden="true" loading="lazy"><span class="toolmark__name">Claude</span></div>
-            <div class="toolmark"><img class="toolmark__logo" src="images/tools/perplexity.svg" alt="" aria-hidden="true" loading="lazy"><span class="toolmark__name">Perplexity</span></div>
-            <div class="toolmark"><img class="toolmark__logo" src="images/tools/firecrawl.png" alt="" aria-hidden="true" loading="lazy"><span class="toolmark__name">Firecrawl</span></div>
-            <div class="toolmark"><img class="toolmark__logo" src="images/tools/dataforseo.png" alt="" aria-hidden="true" loading="lazy"><span class="toolmark__name">DataForSEO</span></div>
-            <div class="toolmark"><img class="toolmark__logo" src="images/tools/hostinger.svg" alt="" aria-hidden="true" loading="lazy"><span class="toolmark__name">Hostinger</span></div>
-            <div class="toolmark"><img class="toolmark__logo" src="images/tools/cloudflare.svg" alt="" aria-hidden="true" loading="lazy"><span class="toolmark__name">Cloudflare</span></div>
-            <div class="toolmark"><img class="toolmark__logo" src="images/tools/google-analytics.svg" alt="" aria-hidden="true" loading="lazy"><span class="toolmark__name">Google Analytics</span></div>
-            <div class="toolmark"><img class="toolmark__logo" src="images/tools/search-console.svg" alt="" aria-hidden="true" loading="lazy"><span class="toolmark__name">Search Console</span></div>
-            <div class="toolmark"><img class="toolmark__logo" src="images/tools/pagespeed.svg" alt="" aria-hidden="true" loading="lazy"><span class="toolmark__name">PageSpeed</span></div>
-            <div class="toolmark"><img class="toolmark__logo" src="images/tools/formspree.svg" alt="" aria-hidden="true" loading="lazy"><span class="toolmark__name">Formspree</span></div>
-            <div class="toolmark"><img class="toolmark__logo" src="images/tools/photoshop.svg" alt="" aria-hidden="true" loading="lazy"><span class="toolmark__name">Photoshop</span></div>
-            <div class="toolmark"><img class="toolmark__logo" src="images/tools/github.svg" alt="" aria-hidden="true" loading="lazy"><span class="toolmark__name">GitHub</span></div>
-            <div class="toolmark"><img class="toolmark__logo" src="images/tools/stripe.svg" alt="" aria-hidden="true" loading="lazy"><span class="toolmark__name">Stripe</span></div>
-            <div class="toolmark"><img class="toolmark__logo" src="images/tools/setmore.png" alt="" aria-hidden="true" loading="lazy"><span class="toolmark__name">Setmore</span></div>
-            <div class="toolmark"><img class="toolmark__logo" src="images/tools/gsap.svg" alt="" aria-hidden="true" loading="lazy"><span class="toolmark__name">GSAP</span></div>
-            <div class="toolmark"><img class="toolmark__logo" src="images/tools/threejs.svg" alt="" aria-hidden="true" loading="lazy"><span class="toolmark__name">Three.js</span></div>
-
+          <!-- Row 1 · AI & research -->
+          <div class="logo-marquee__viewport">
+            <div class="logo-marquee__track" data-marquee-track data-marquee-offset="0">
+              <div class="toolmark"><img class="toolmark__logo" src="images/tools/claude.svg" alt="" aria-hidden="true" loading="lazy"><span class="toolmark__name">Claude</span></div>
+              <div class="toolmark"><img class="toolmark__logo" src="images/tools/perplexity.svg" alt="" aria-hidden="true" loading="lazy"><span class="toolmark__name">Perplexity</span></div>
+              <div class="toolmark"><img class="toolmark__logo" src="images/tools/firecrawl.png" alt="" aria-hidden="true" loading="lazy"><span class="toolmark__name">Firecrawl</span></div>
+              <div class="toolmark"><img class="toolmark__logo" src="images/tools/dataforseo.png" alt="" aria-hidden="true" loading="lazy"><span class="toolmark__name">DataForSEO</span></div>
+              <div class="toolmark"><img class="toolmark__logo" src="images/tools/github.svg" alt="" aria-hidden="true" loading="lazy"><span class="toolmark__name">GitHub</span></div>
+            </div>
           </div>
+
+          <!-- Row 2 · Hosting & analytics -->
+          <div class="logo-marquee__viewport">
+            <div class="logo-marquee__track" data-marquee-track data-marquee-offset="0.37">
+              <div class="toolmark"><img class="toolmark__logo" src="images/tools/hostinger.svg" alt="" aria-hidden="true" loading="lazy"><span class="toolmark__name">Hostinger</span></div>
+              <div class="toolmark"><img class="toolmark__logo" src="images/tools/cloudflare.svg" alt="" aria-hidden="true" loading="lazy"><span class="toolmark__name">Cloudflare</span></div>
+              <div class="toolmark"><img class="toolmark__logo" src="images/tools/google-analytics.svg" alt="" aria-hidden="true" loading="lazy"><span class="toolmark__name">Google Analytics</span></div>
+              <div class="toolmark"><img class="toolmark__logo" src="images/tools/search-console.svg" alt="" aria-hidden="true" loading="lazy"><span class="toolmark__name">Search Console</span></div>
+              <div class="toolmark"><img class="toolmark__logo" src="images/tools/pagespeed.svg" alt="" aria-hidden="true" loading="lazy"><span class="toolmark__name">PageSpeed</span></div>
+            </div>
+          </div>
+
+          <!-- Row 3 · Build & business -->
+          <div class="logo-marquee__viewport">
+            <div class="logo-marquee__track" data-marquee-track data-marquee-offset="0.71">
+              <div class="toolmark"><img class="toolmark__logo" src="images/tools/gsap.svg" alt="" aria-hidden="true" loading="lazy"><span class="toolmark__name">GSAP</span></div>
+              <div class="toolmark"><img class="toolmark__logo" src="images/tools/threejs.svg" alt="" aria-hidden="true" loading="lazy"><span class="toolmark__name">Three.js</span></div>
+              <div class="toolmark"><img class="toolmark__logo" src="images/tools/photoshop.svg" alt="" aria-hidden="true" loading="lazy"><span class="toolmark__name">Photoshop</span></div>
+              <div class="toolmark"><img class="toolmark__logo" src="images/tools/stripe.svg" alt="" aria-hidden="true" loading="lazy"><span class="toolmark__name">Stripe</span></div>
+              <div class="toolmark"><img class="toolmark__logo" src="images/tools/setmore.png" alt="" aria-hidden="true" loading="lazy"><span class="toolmark__name">Setmore</span></div>
+              <div class="toolmark"><img class="toolmark__logo" src="images/tools/formspree.svg" alt="" aria-hidden="true" loading="lazy"><span class="toolmark__name">Formspree</span></div>
+            </div>
+          </div>
+
         </div>
       </section>
 
@@ -360,6 +377,12 @@
         </div>
       </section>
 
+      <!-- ============================================================
+           TEMPORARILY HIDDEN (2026-07-27): stats strip numbers are
+           outdated (14+ sites / 3x traffic / 100% retention). Refresh
+           the figures, then delete the wrapping <div hidden> to restore.
+           ============================================================ -->
+      <div hidden>
       <!-- STATS STRIP (full-bleed) -->
       <section class="stats-strip">
         <div class="container">
@@ -379,76 +402,74 @@
           </div>
         </div>
       </section>
+      </div><!-- /TEMPORARILY HIDDEN stats strip -->
 
       <!-- FEATURED WORK -->
       <section class="featured-work" id="work-preview">
         <div class="container">
 
-          <!-- Portfolio wall — every site at a glance. Tiles without a
-               screenshot yet show a wordmark slot; drop an <img> into
-               .wall-tile__shot and the placeholder hides itself. -->
+          <!-- ============================================================
+               TEMPORARILY HIDDEN (2026-07-25): portfolio mosaic below is
+               parked until every tile has a real thumbnail and the heading
+               copy is rewritten. To bring it back, delete the wrapping
+               <div hidden> (and its closing tag after the .folio grid).
+               ============================================================ -->
+          <div hidden>
+          <!-- Portfolio mosaic — editorial layout. Placeholder tiles carry
+               .folio--soon; when a screenshot arrives, swap the tile's inner
+               content for an <img> + .folio__cap and drop the --soon class. -->
           <span class="eyebrow">Our portfolio</span>
-          <h2 class="section-title">Every one of these is ours.</h2>
-          <p class="work-wall__lede">Designed, built and launched end to end by the two of us — trades, transport, wellness, events, retail and more.</p>
+          <h2 class="section-title">Fourteen sites. Two people. No templates.</h2>
 
-          <div class="work-wall">
-            <a href="https://soundsystemhire.ie" target="_blank" rel="noopener" class="wall-tile">
-              <div class="wall-tile__shot"><img src="images/work/soundsystemhire.jpg" alt="SoundSystemHire.ie homepage" loading="lazy" width="800" height="500"></div>
-              <div class="wall-tile__cap"><strong>Sound System Hire</strong><span>soundsystemhire.ie</span></div>
+          <div class="folio">
+
+            <!-- Band 1: feature + sidebar -->
+            <a href="https://soundsystemhire.ie" target="_blank" rel="noopener" class="folio__tile folio--xl">
+              <img src="images/work/soundsystemhire.jpg" alt="SoundSystemHire.ie homepage" width="800" height="500">
+              <div class="folio__cap"><strong>Sound System Hire</strong><span>soundsystemhire.ie</span></div>
             </a>
-            <div class="wall-tile wall-tile--soon">
-              <div class="wall-tile__shot"><div class="wall-tile__mark"><strong>Maxim Motors</strong></div></div>
-              <div class="wall-tile__cap"><strong>Maxim Motors</strong><span>maximmotors.ie</span></div>
-            </div>
-            <a href="https://paynes.ie" target="_blank" rel="noopener" class="wall-tile">
-              <div class="wall-tile__shot"><img src="images/work/paynes.jpg" alt="Paynes Coach Hire homepage" loading="lazy" width="800" height="481"></div>
-              <div class="wall-tile__cap"><strong>Paynes Coach Hire</strong><span>paynes.ie</span></div>
+            <div class="folio__tile folio--bar folio--soon"><strong>Maxim Motors</strong><span>maximmotors.ie</span></div>
+            <div class="folio__tile folio--bar folio--soon"><strong>Trait Yourself</strong><span>traityourself.com</span></div>
+            <div class="folio__tile folio--bar folio--soon"><strong>Vivivie</strong></div>
+
+            <!-- Duo -->
+            <a href="https://paynes.ie" target="_blank" rel="noopener" class="folio__tile folio--w">
+              <img src="images/work/paynes.jpg" alt="Paynes Coach Hire homepage" loading="lazy" width="800" height="481">
+              <div class="folio__cap"><strong>Paynes Coach Hire</strong><span>paynes.ie</span></div>
             </a>
-            <div class="wall-tile wall-tile--soon">
-              <div class="wall-tile__shot"><div class="wall-tile__mark"><strong>Trait Yourself</strong></div></div>
-              <div class="wall-tile__cap"><strong>Trait Yourself</strong><span>traityourself.com</span></div>
-            </div>
-            <a href="https://privatebushire.ie" target="_blank" rel="noopener" class="wall-tile">
-              <div class="wall-tile__shot"><img src="images/work/privatebushire.jpg" alt="PrivateBusHire.ie homepage" loading="lazy" width="800" height="500"></div>
-              <div class="wall-tile__cap"><strong>Private Bus Hire</strong><span>privatebushire.ie</span></div>
+            <a href="https://privatebushire.ie" target="_blank" rel="noopener" class="folio__tile folio--w">
+              <img src="images/work/privatebushire.jpg" alt="PrivateBusHire.ie homepage" loading="lazy" width="800" height="500">
+              <div class="folio__cap"><strong>Private Bus Hire</strong><span>privatebushire.ie</span></div>
             </a>
-            <div class="wall-tile wall-tile--soon">
-              <div class="wall-tile__shot"><div class="wall-tile__mark"><strong>Sandy Cove Sauna</strong></div></div>
-              <div class="wall-tile__cap"><strong>Sandy Cove Sauna</strong><span>sandycovesaunabythesea.ie</span></div>
-            </div>
-            <a href="https://plunge.ie" target="_blank" rel="noopener" class="wall-tile">
-              <div class="wall-tile__shot"><img src="images/work/plunge.jpg" alt="Plunge Recovery homepage" loading="lazy" width="800" height="418"></div>
-              <div class="wall-tile__cap"><strong>Plunge Recovery</strong><span>plunge.ie</span></div>
+
+            <!-- Band 2: sidebar + feature (mirrored) -->
+            <div class="folio__tile folio--bar folio--soon"><strong>Sandy Cove Sauna</strong><span>sandycovesaunabythesea.ie</span></div>
+            <a href="https://towingireland.ie" target="_blank" rel="noopener" class="folio__tile folio--xl-r">
+              <img src="images/work/towingireland.jpg" alt="TowingIreland.ie homepage" loading="lazy" width="800" height="390">
+              <div class="folio__cap"><strong>Towing Ireland</strong><span>towingireland.ie</span></div>
             </a>
-            <div class="wall-tile wall-tile--soon">
-              <div class="wall-tile__shot"><div class="wall-tile__mark"><strong>Driveways Ireland</strong></div></div>
-              <div class="wall-tile__cap"><strong>Driveways Ireland</strong><span>drivewaysireland.ie</span></div>
-            </div>
-            <a href="https://towingireland.ie" target="_blank" rel="noopener" class="wall-tile">
-              <div class="wall-tile__shot"><img src="images/work/towingireland.jpg" alt="TowingIreland.ie homepage" loading="lazy" width="800" height="390"></div>
-              <div class="wall-tile__cap"><strong>Towing Ireland</strong><span>towingireland.ie</span></div>
+            <div class="folio__tile folio--bar folio--soon"><strong>Driveways Ireland</strong><span>drivewaysireland.ie</span></div>
+            <div class="folio__tile folio--bar folio--soon"><strong>Phoenix</strong></div>
+
+            <!-- Duo -->
+            <a href="https://plunge.ie" target="_blank" rel="noopener" class="folio__tile folio--w">
+              <img src="images/work/plunge.jpg" alt="Plunge Recovery homepage" loading="lazy" width="800" height="418">
+              <div class="folio__cap"><strong>Plunge Recovery</strong><span>plunge.ie</span></div>
             </a>
-            <div class="wall-tile wall-tile--soon">
-              <div class="wall-tile__shot"><div class="wall-tile__mark"><strong>South Dublin Painters</strong></div></div>
-              <div class="wall-tile__cap"><strong>South Dublin Painters</strong><span>southdublinpainters.ie</span></div>
-            </div>
-            <a href="https://visionwellbeing.co.uk" target="_blank" rel="noopener" class="wall-tile">
-              <div class="wall-tile__shot"><img src="images/work/visionwellbeing.jpg" alt="Vision Wellbeing homepage" loading="lazy" width="800" height="500"></div>
-              <div class="wall-tile__cap"><strong>Vision Wellbeing</strong><span>visionwellbeing.co.uk</span></div>
+            <a href="https://visionwellbeing.co.uk" target="_blank" rel="noopener" class="folio__tile folio--w">
+              <img src="images/work/visionwellbeing.jpg" alt="Vision Wellbeing homepage" loading="lazy" width="800" height="500">
+              <div class="folio__cap"><strong>Vision Wellbeing</strong><span>visionwellbeing.co.uk</span></div>
             </a>
-            <div class="wall-tile wall-tile--soon">
-              <div class="wall-tile__shot"><div class="wall-tile__mark"><strong>Vivivie</strong></div></div>
-              <div class="wall-tile__cap"><strong>Vivivie</strong></div>
-            </div>
-            <a href="https://eastcoastmechanics.ie" target="_blank" rel="noopener" class="wall-tile">
-              <div class="wall-tile__shot"><img src="images/work/eastcoastmechanics.jpg" alt="East Coast Mechanics homepage" loading="lazy" width="800" height="427"></div>
-              <div class="wall-tile__cap"><strong>East Coast Mechanics</strong><span>eastcoastmechanics.ie</span></div>
+
+            <!-- Closing pair -->
+            <a href="https://eastcoastmechanics.ie" target="_blank" rel="noopener" class="folio__tile folio--w">
+              <img src="images/work/eastcoastmechanics.jpg" alt="East Coast Mechanics homepage" loading="lazy" width="800" height="427">
+              <div class="folio__cap"><strong>East Coast Mechanics</strong><span>eastcoastmechanics.ie</span></div>
             </a>
-            <div class="wall-tile wall-tile--soon">
-              <div class="wall-tile__shot"><div class="wall-tile__mark"><strong>Phoenix</strong></div></div>
-              <div class="wall-tile__cap"><strong>Phoenix</strong></div>
-            </div>
+            <div class="folio__tile folio--w folio--soon"><strong>South Dublin Painters</strong><span>southdublinpainters.ie</span></div>
+
           </div>
+          </div><!-- /TEMPORARILY HIDDEN portfolio mosaic -->
 
           <span class="eyebrow">A closer look</span>
           <h2 class="section-title section-title--chart">Results, not just websites
@@ -540,67 +561,79 @@
                 <div class="work-card__tags"><span class="tag">Online Booking</span><span class="tag">SEO</span><span class="tag">Brand Design</span></div>
               </div>
             </a>
+            <a href="https://vivivie.ie" target="_blank" rel="noopener" class="work-card">
+              <div class="work-card__thumb" style="background-image: url('images/work/vivivie.jpg')"></div>
+              <div class="work-card__info">
+                <span class="tag">E-commerce</span>
+                <h3 class="work-card__title">Vivi Vie</h3>
+                <p class="work-card__result">Irish designer jewellery label — full online store with collections browsable by piece and shipping nationwide</p>
+                <div class="work-card__tags"><span class="tag">Online Store</span><span class="tag">Product Catalogue</span><span class="tag">Nationwide Shipping</span></div>
+              </div>
+            </a>
+            <a href="https://alphadogireland.com" target="_blank" rel="noopener" class="work-card">
+              <div class="work-card__thumb" style="background-image: url('images/work/alphadogireland.jpg')"></div>
+              <div class="work-card__info">
+                <span class="tag">Pet Services</span>
+                <h3 class="work-card__title">Alpha Dog Ireland</h3>
+                <p class="work-card__result">South Dublin dog walking service — built around one-tap calling and WhatsApp so enquiries land while owners are still on the page</p>
+                <div class="work-card__tags"><span class="tag">Click-to-Call</span><span class="tag">WhatsApp</span><span class="tag">Local SEO</span></div>
+              </div>
+            </a>
+            <a href="https://costellojewellersdl.ie" target="_blank" rel="noopener" class="work-card">
+              <div class="work-card__thumb" style="background-image: url('images/work/costellojewellers.jpg')"></div>
+              <div class="work-card__info">
+                <span class="tag">Retail &amp; Jewellery</span>
+                <h3 class="work-card__title">Costello Jewellers</h3>
+                <p class="work-card__result">Long-established Dún Laoghaire jeweller — an online collection that turns browsing into footfall through the shop door</p>
+                <div class="work-card__tags"><span class="tag">Online Catalogue</span><span class="tag">Customer Reviews</span><span class="tag">Click-to-Call</span></div>
+              </div>
+            </a>
+            <a href="https://phoenixbistro.ie" target="_blank" rel="noopener" class="work-card">
+              <div class="work-card__thumb" style="background-image: url('images/work/phoenixbistro.jpg')"></div>
+              <div class="work-card__info">
+                <span class="tag">Hospitality</span>
+                <h3 class="work-card__title">Phoenix Bistro</h3>
+                <p class="work-card__result">All-day bistro in Dún Laoghaire — menu, gallery and directions shaped for people deciding where to eat on their phone</p>
+                <div class="work-card__tags"><span class="tag">Online Menu</span><span class="tag">Gallery</span><span class="tag">Click-to-Call</span></div>
+              </div>
+            </a>
+            <a href="https://sandycovesaunabythesea.ie" target="_blank" rel="noopener" class="work-card">
+              <div class="work-card__thumb" style="background-image: url('images/work/sandycovesauna.jpg')"></div>
+              <div class="work-card__info">
+                <span class="tag">Wellness &amp; Leisure</span>
+                <h3 class="work-card__title">Sandy Cove Sauna</h3>
+                <p class="work-card__result">Seaside sauna steps from the Forty Foot — session booking online, with live tide times for swimmers planning a dip</p>
+                <div class="work-card__tags"><span class="tag">Online Booking</span><span class="tag">Live Tides</span><span class="tag">Instagram Feed</span></div>
+              </div>
+            </a>
+            <a href="https://plunge.ie" target="_blank" rel="noopener" class="work-card">
+              <div class="work-card__thumb" style="background-image: url('images/work/plunge.jpg')"></div>
+              <div class="work-card__info">
+                <span class="tag">Wellness &amp; Recovery</span>
+                <h3 class="work-card__title">Plunge Recovery</h3>
+                <p class="work-card__result">Contrast therapy studio — sauna and ice bath sessions bookable online, wrapped in a brand that sells the experience before the copy does</p>
+                <div class="work-card__tags"><span class="tag">Online Booking</span><span class="tag">Brand Design</span><span class="tag">Gallery</span></div>
+              </div>
+            </a>
+            <a href="https://privatebushire.ie" target="_blank" rel="noopener" class="work-card">
+              <div class="work-card__thumb" style="background-image: url('images/work/privatebushire.jpg')"></div>
+              <div class="work-card__info">
+                <span class="tag">Transport &amp; Tourism</span>
+                <h3 class="work-card__title">Private Bus Hire Ireland</h3>
+                <p class="work-card__result">Guided day tours and private coach hire — an instant quote form built straight into the hero, backed by tour, fleet and route pages</p>
+                <div class="work-card__tags"><span class="tag">Instant Quote Form</span><span class="tag">Tour Pages</span><span class="tag">Fleet Showcase</span></div>
+              </div>
+            </a>
+            <a href="https://maximmotors.ie" target="_blank" rel="noopener" class="work-card">
+              <div class="work-card__thumb" style="background-image: url('images/work/maximmotors.jpg')"></div>
+              <div class="work-card__info">
+                <span class="tag">Automotive</span>
+                <h3 class="work-card__title">Maxim Motors</h3>
+                <p class="work-card__result">Independent South Dublin garage — free-quote flow and click-to-call up front, with Google reviews and NCT prep doing the convincing</p>
+                <div class="work-card__tags"><span class="tag">Free Quote Flow</span><span class="tag">Click-to-Call</span><span class="tag">Google Reviews</span></div>
+              </div>
+            </a>
           </div>
-        </div>
-      </section>
-
-      <!-- PRICING -->
-      <section class="pricing-section">
-        <div class="container">
-          <div class="pricing-intro">
-            <span class="eyebrow">Pricing</span>
-            <h2 class="section-title">Simple tiers, built to scale with you.</h2>
-            <p class="pricing-intro__sub">Start with a website you're proud of, or hand us your whole online presence. Pick the level that matches your ambition.</p>
-          </div>
-          <div class="pricing-grid">
-
-            <!-- Tier 1: Build -->
-            <div class="pricing-card">
-              <span class="pricing-card__tier">Build</span>
-              <div class="pricing-card__price">&euro;2,500</div>
-              <div class="pricing-card__price-note">One-off</div>
-              <p class="pricing-card__tagline">A website you can be proud of</p>
-              <ul class="pricing-card__features">
-                <li>Custom-designed, hand-coded website</li>
-                <li>Mobile-first responsive design</li>
-                <li>On-page SEO foundations</li>
-                <li>Analytics &amp; hosting setup</li>
-              </ul>
-              <a href="contact.html" class="btn-secondary">Get started</a>
-            </div>
-
-            <!-- Tier 2: Build + Grow (RECOMMENDED) -->
-            <div class="pricing-card pricing-card--recommended">
-              <span class="pricing-card__tier">Build + Grow</span>
-              <div class="pricing-card__price">&euro;3,500 <span style="font-size: 0.5em; font-weight: 400; color: var(--ink-subtle);">setup</span></div>
-              <div class="pricing-card__price-note">+ &euro;500/month ongoing</div>
-              <p class="pricing-card__tagline">Your website, plus the traffic to match</p>
-              <ul class="pricing-card__features">
-                <li>Everything in Build</li>
-                <li>Full SEO strategy &amp; implementation</li>
-                <li>Local SEO &amp; Google Business Profile</li>
-                <li>Monthly performance reporting</li>
-              </ul>
-              <a href="contact.html" class="btn-primary">Talk to us</a>
-            </div>
-
-            <!-- Tier 3: Full Stack Growth (ANCHOR) -->
-            <div class="pricing-card">
-              <span class="pricing-card__tier">Full Stack Growth</span>
-              <div class="pricing-card__price">&euro;8,000 <span style="font-size: 0.5em; font-weight: 400; color: var(--ink-subtle);">setup</span></div>
-              <div class="pricing-card__price-note">+ &euro;2,000/month ongoing</div>
-              <p class="pricing-card__tagline">We run your online presence. You run your business.</p>
-              <ul class="pricing-card__features">
-                <li>Everything in Build + Grow</li>
-                <li>Google Ads &amp; social content</li>
-                <li>AI workflow automation</li>
-                <li>Dedicated account manager</li>
-              </ul>
-              <a href="contact.html" class="btn-secondary">Let's talk</a>
-            </div>
-
-          </div>
-          <p class="pricing-section__more"><a href="pricing.html">See full pricing &amp; what's included <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 12l4-4-4-4"/></svg></a></p>
         </div>
       </section>
 
@@ -628,8 +661,8 @@
             <ul class="footer__links">
               <li><a href="index.html" class="footer__link">Home</a></li>
               <li><a href="services.html" class="footer__link">Services</a></li>
-              <li><a href="work.html" class="footer__link">Work</a></li>
-              <li><a href="pricing.html" class="footer__link">Pricing</a></li>
+              <!-- page temporarily hidden (2026-07-27): <li><a href="work.html" class="footer__link">Work</a></li> -->
+              <!-- page temporarily hidden (2026-07-27): <li><a href="pricing.html" class="footer__link">Pricing</a></li> -->
               <li><a href="contact.html" class="footer__link">Contact</a></li>
             </ul>
           </div>
@@ -681,42 +714,24 @@
 
 <!-- Libraries (CDN) -->
 <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/build/three.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js" defer></script>
+<script src="js/ireland-outline.js" defer></script>
+<script src="js/ireland-net.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@latest/dist/lenis.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/@barba/core@latest/dist/barba.umd.js" defer></script>
 <script src="js/main.js" defer></script>
-<!-- Light mockup: recolor the Vanta hero net for a white canvas -->
-<script>
-  window.addEventListener('load', function () {
-    var tries = 0;
-    var iv = setInterval(function () {
-      tries++;
-      var e = window.__vantaEffect, THREE = window.THREE;
-      if (e && e.setOptions && THREE) {
-        // White canvas; keep the dots green.
-        e.setOptions({ color: 0x16a34a, backgroundColor: 0xffffff });
-        // Vanta draws the connector lines with ADDITIVE blending, which is
-        // invisible on white (white + colour = white). Switch the line
-        // material to normal blending with a solid black colour so the
-        // connectors read against the light background. Dots are separate
-        // sphere meshes and stay green.
-        if (e.linesMesh && e.linesMesh.material) {
-          var m = e.linesMesh.material;
-          m.vertexColors = false;
-          m.color = new THREE.Color(0x000000);
-          m.blending = THREE.NormalBlending;
-          m.transparent = false;
-          m.needsUpdate = true;
-        }
-        clearInterval(iv);
-      } else if (tries > 50) {
-        clearInterval(iv);
-      }
-    }, 100);
-  });
-</script>
+
+<!-- ============================================================
+     WOW PASS (Tier 1) — experimental production-value layer.
+     REVERT: delete this whole block plus css/wow.css and js/wow.js.
+     Nothing else references them; main.js is untouched.
+     ============================================================ -->
+<link rel="stylesheet" href="css/wow.css">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/SplitText.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrambleTextPlugin.min.js" defer></script>
+<script src="js/wow.js" defer></script>
+<!-- ===================== end WOW PASS ======================== -->
 <!-- Brand logo marquee: fill the track for a seamless loop + reveal on scroll -->
 <script>
   (function () {
@@ -743,10 +758,17 @@
       half.forEach(function (n) { track.appendChild(clone(n)); });
 
       // 3) Tie scroll speed to content width so density stays consistent.
-      //    49 px/s = 30% slower than the original 70 px/s.
-      var pxPerSec = 49;
+      //    65 px/s (was 49, sped up 33%).
+      var pxPerSec = 65;
       var halfWidth = track.scrollWidth / 2;
-      track.style.animationDuration = Math.max(26, halfWidth / pxPerSec) + 's';
+      var duration = Math.max(26, halfWidth / pxPerSec);
+      track.style.animationDuration = duration + 's';
+
+      // 4) Multi-row strips stagger their start phase so the rows never
+      //    line up vertically. A negative delay starts the loop already
+      //    part-way through, which is seamless on an infinite marquee.
+      var offset = parseFloat(track.getAttribute('data-marquee-offset'));
+      if (offset) track.style.animationDelay = -(duration * offset) + 's';
     }
 
     var tracks = document.querySelectorAll('[data-marquee-track]');

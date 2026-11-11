@@ -31,13 +31,9 @@
 /* Hero contrast overlay was a dark radial vignette for white text
    on black. Flip to a soft white wash so dark hero text stays legible. */
 .hero::after {
-  background: radial-gradient(ellipse at 30% 50%,
-    rgba(255, 255, 255, 0.9) 0%,
-    rgba(255, 255, 255, 0.55) 60%,
-    transparent 80%) !important;
+  display: none;
 }
 
-/* Vanta net is faint; lift it slightly so the green mesh reads on white. */
 .hero__vanta { opacity: 0.5; }
 
 /* Soften the heavy dark drop-shadows that were tuned for a black canvas. */

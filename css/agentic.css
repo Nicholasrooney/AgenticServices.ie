@@ -3,6 +3,74 @@
    (work wall, featured-card tags). Loaded after light-theme.css.
    ============================================================ */
 
+/* ---- Hero legibility scrim ----
+   The Ireland net is offset to the right (see initVanta in js/main.js);
+   this wash sits between the canvas (z 0) and the copy (z 1) so the
+   dark hero text stays readable wherever the net lands.
+   light-theme.css disables .hero::after — re-enabled here. */
+.hero::after {
+  display: block;
+  background: linear-gradient(100deg,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(255, 255, 255, 0.85) 34%,
+    rgba(255, 255, 255, 0.35) 58%,
+    transparent 76%);
+}
+
+/* Anchor the hero copy left. .hero__content is itself a .container, so
+   its auto margins centred the 700px block in the viewport — drifting it
+   onto the island. Pin its left edge where the full 1280px container
+   starts, so the copy lines up with the nav logo and the right half
+   stays clear for the Ireland net. */
+.hero__content.container {
+  margin-left: max(0px, calc((100% - 1280px) / 2));
+  margin-right: 0;
+}
+
+/* Halfscreen / tablet: the island starts sliding back toward the copy,
+   so extend the wash further across. */
+@media (max-width: 1100px) {
+  .hero::after {
+    background: linear-gradient(100deg,
+      rgba(255, 255, 255, 0.95) 0%,
+      rgba(255, 255, 255, 0.85) 45%,
+      rgba(255, 255, 255, 0.45) 70%,
+      rgba(255, 255, 255, 0.15) 100%);
+  }
+}
+
+/* Mobile: there's no room to separate copy and art side by side, so
+   split them vertically instead — the Ireland net sits up top just under
+   the navbar (see initVanta), with the copy pinned to the bottom. The
+   scrim mirrors that: clear at the top so the net runs at near-full
+   strength, solid behind the copy below. The original approach washed a
+   flat 82% white band across the whole hero, killing the background. */
+@media (max-width: 700px) {
+  .hero {
+    align-items: flex-end;
+  }
+  .hero__content.container {
+    margin-left: 0;
+    padding-bottom: clamp(1.5rem, 6vh, 3rem);
+  }
+  /* The net is clear of the text now, so it can be vivid — but not
+     darker than desktop. At phone size the strokes sit closer together
+     in screen pixels and blend, so 0.95 read as a heavy dark mass;
+     this lands nearer desktop's weight while staying clearly visible
+     (desktop needs only 0.5 because it also has a diagonal scrim). */
+  .hero__vanta {
+    opacity: 0.68;
+  }
+  .hero::after {
+    background: linear-gradient(180deg,
+      transparent 12%,
+      rgba(255, 255, 255, 0.14) 24%,
+      rgba(255, 255, 255, 0.52) 40%,
+      rgba(255, 255, 255, 0.9) 56%,
+      rgba(255, 255, 255, 0.94) 100%);
+  }
+}
+
 .work-wall__lede {
   max-width: 560px;
   color: var(--ink-subtle);
@@ -116,6 +184,190 @@
   .wall-tile__cap { padding: 8px 10px; }
   .wall-tile__cap span { display: none; }
 }
+
+/* ---- Services: four in a row (overrides the offset collage) ---- */
+.bento-grid.svc-collage {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  max-width: none;
+  gap: 18px;
+  align-items: stretch;
+}
+.bento-grid.svc-collage > .svc-card:nth-child(even) {
+  margin-top: 0;
+}
+.bento-grid.svc-collage .card__title { font-size: 1.05rem; }
+.bento-grid.svc-collage .card__desc { font-size: 0.88rem; }
+
+/* Mobile: swipeable card rail with edge peek */
+@media (max-width: 900px) {
+  .bento-grid.svc-collage {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: min(78%, 330px);
+    max-width: none;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 20px;
+    padding: 4px 20px 18px;
+    margin-inline: -20px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .bento-grid.svc-collage::-webkit-scrollbar { display: none; }
+  .bento-grid.svc-collage > .svc-card {
+    scroll-snap-align: center;
+    margin-top: 0;
+  }
+}
+
+/* ---- Portfolio mosaic — editorial "magazine" wall ---- */
+.folio {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-auto-rows: 108px;
+  gap: 14px;
+  margin: clamp(2rem, 4vw, 3rem) 0 clamp(3rem, 6vw, 4.5rem);
+}
+
+.folio__tile {
+  position: relative;
+  display: block;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--surface-1);
+}
+.folio__tile img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.folio__tile:hover img { transform: scale(1.045); }
+
+.folio__cap {
+  position: absolute;
+  inset: auto 0 0 0;
+  z-index: 1;
+  padding: 46px 18px 14px;
+  background: linear-gradient(to top, rgba(8, 10, 14, 0.74) 0%, rgba(8, 10, 14, 0.28) 62%, transparent 100%);
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  transition: padding-bottom 0.3s ease;
+}
+.folio__tile:hover .folio__cap { padding-bottom: 18px; }
+.folio__cap strong {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  font-size: clamp(0.95rem, 1.4vw, 1.15rem);
+  letter-spacing: -0.01em;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.folio__cap span {
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.75);
+  white-space: nowrap;
+}
+
+/* Tile sizes */
+.folio--xl  { grid-column: span 4; grid-row: span 3; }
+.folio--xl-r { grid-column: 3 / span 4; grid-row: span 3; }
+.folio--w   { grid-column: span 3; grid-row: span 2; }
+.folio--bar { grid-column: span 2; grid-row: span 1; }
+
+/* Placeholder tiles — screenshot pending. Drop an <img> +
+   .folio__cap in and restyle by removing the --soon class. */
+.folio--soon {
+  border: 1px dashed var(--hairline-strong);
+  background-color: var(--surface-2);
+  background-image:
+    repeating-linear-gradient( 30deg, rgba(22, 163, 74, 0.05) 0 1px, transparent 1px 24px),
+    repeating-linear-gradient(-30deg, rgba(22, 163, 74, 0.05) 0 1px, transparent 1px 24px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 0 18px;
+}
+.folio--soon strong {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: -0.01em;
+  color: var(--ink-muted);
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.folio--soon strong::before {
+  content: '';
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--primary);
+  opacity: 0.7;
+  flex-shrink: 0;
+}
+.folio--soon span {
+  font-size: 0.7rem;
+  color: var(--ink-tertiary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* Large placeholder: centred wordmark */
+.folio--soon.folio--w {
+  flex-direction: column;
+  justify-content: center;
+}
+.folio--soon.folio--w strong { font-size: 1.1rem; }
+
+@media (max-width: 700px) {
+  .folio {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: 96px;
+    gap: 10px;
+  }
+  .folio--xl, .folio--xl-r, .folio--w { grid-column: span 2; grid-row: span 2; }
+  .folio--bar { grid-column: span 1; }
+  .folio--soon { padding: 0 12px; justify-content: center; }
+  .folio--soon span { display: none; }
+  .folio__cap { padding: 34px 14px 10px; }
+}
+
+/* ---- CTA banner: liquid-glass card ----
+   Replaces the flat grey .cta-banner__inner so the ascii energy field
+   rising behind it (canvas at z 0) refracts through the card. */
+.cta-banner__inner {
+  background: linear-gradient(135deg,
+    rgba(255, 255, 255, 0.15) 0%,
+    rgba(255, 255, 255, 0.05) 100%);
+  -webkit-backdrop-filter: blur(7px) saturate(1.5);
+  backdrop-filter: blur(7px) saturate(1.5);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow:
+    0 24px 60px -32px rgba(15, 23, 42, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.85),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.25);
+}
+/* No backdrop-filter support: fall back to a near-opaque card so the
+   copy never fights the animation directly. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .cta-banner__inner {
+    background: rgba(255, 255, 255, 0.92);
+  }
+}
+/* Let the field run a touch brighter now the card diffuses it. */
+.cta-ascii { opacity: 1; }
 
 /* ---- Feature tags on the featured work cards ---- */
 .work-card__tags {

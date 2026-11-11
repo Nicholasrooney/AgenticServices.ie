@@ -31,11 +31,9 @@ function runCounterAnimation(preloader, counter) {
   var cursor = preloader.querySelector('.preloader__cursor');
   var typed = preloader.querySelector('.preloader__typed');
 
-  // Type "W" then "e" during cursor blink phase
-  if (typed) {
-    setTimeout(function() { typed.textContent = 'A'; }, 300);
-    setTimeout(function() { typed.textContent = 'Agentic'; }, 750);
-  }
+  // Show the full first word straight away — the counter animation
+  // handles "Services", no typing jump beforehand.
+  if (typed) typed.textContent = 'Agentic';
 
   // 2 cursor blinks (1s) + 0.5s hold with cursor visible, then start counting
   if (cursor) {
@@ -372,71 +370,37 @@ function initGSAP() {
       });
     });
 
-    // "compound" word counter animation — fires once on scroll
-    document.querySelectorAll('.compound-counter').forEach(function(el) {
-      var finalWord = el.getAttribute('data-final') || el.textContent;
-      var hasPlayed = false;
+    // Services title shoots in from the left of the screen on scroll.
+    // (Replaces the old number count-up on .compound-counter — the word
+    // in the heading now just renders as-is.)
+    // fromTo, not from: the generic section-entrance tween below also
+    // targets this element and sets its opacity to 0, and a bare from()
+    // would capture that 0 as its destination — leaving the heading
+    // permanently invisible. Explicit end values make it order-proof.
+    var svcTitle = document.querySelector('.services-overview .section-title');
+    if (svcTitle) {
+      gsap.fromTo(svcTitle,
+        { x: function() { return -(window.innerWidth * 0.9); }, opacity: 0 },
+        {
+          x: 0,
+          opacity: 1,
+          duration: 0.9,
+          ease: 'power3.out',
+          scrollTrigger: { trigger: svcTitle, start: 'top 85%', once: true },
+        }
+      );
+    }
 
-      // Set to "0" immediately so the word doesn't flash before animating
-      el.textContent = '0';
-
-      ScrollTrigger.create({
-        trigger: el,
-        start: 'top 85%',
-        once: true,
-        onEnter: function() {
-          if (hasPlayed) return;
-          hasPlayed = true;
-
-          // Phase A: 0→10 over 400ms (visible ramp)
-          // Phase B: 10→999,999 over 600ms (explosive)
-          var phaseA = 400;
-          var phaseB = 600;
-          var start = performance.now();
-          var lastDisplay = -1;
-
-          function tick(now) {
-            var elapsed = now - start;
-            var value;
-
-            if (elapsed < phaseA) {
-              var p = elapsed / phaseA;
-              value = Math.max(0, Math.floor(10 * Math.pow(p, 2)));
-            } else if (elapsed < phaseA + phaseB) {
-              var p = (elapsed - phaseA) / phaseB;
-              value = Math.floor(10 + 999989 * Math.pow(p, 4));
-            } else {
-              el.textContent = finalWord;
-              return;
-            }
-
-            if (value !== lastDisplay) {
-              el.textContent = value.toLocaleString();
-              lastDisplay = value;
-            }
-            requestAnimationFrame(tick);
-          }
-
-          requestAnimationFrame(tick);
-        },
-      });
-    });
-
-    // Fade-out sections as they scroll off the top (homepage only)
-    var fadeSections = [
-      { sel: '.hero', start: 'bottom 25%', end: 'bottom 10%' },
-      { sel: '.founder', start: 'bottom 45%', end: 'bottom 25%' },
-      { sel: '.services-overview', start: 'bottom 25%', end: 'bottom 10%' },
-      { sel: '.stats-strip', start: 'bottom 25%', end: 'bottom 10%' },
-      { sel: '.featured-work', start: 'bottom 25%', end: 'bottom 10%' },
-    ];
-    fadeSections.forEach(function(cfg) {
-      var section = document.querySelector(cfg.sel);
-      if (!section) return;
+    // Fade-out every section as it scrolls off the top — one cohesive
+    // rule: fading begins when a section's bottom edge passes 45% of
+    // the viewport and it is fully white (invisible) by 22%.
+    var fadeSelectors = '.hero, .logo-marquee, .founder, .services-overview, ' +
+      '.stats-strip, .featured-work, .pricing-section, .cta-banner';
+    document.querySelectorAll(fadeSelectors).forEach(function(section) {
       ScrollTrigger.create({
         trigger: section,
-        start: cfg.start,
-        end: cfg.end,
+        start: 'bottom 45%',
+        end: 'bottom 22%',
         scrub: 0.15,
         onUpdate: function(self) {
           section.style.opacity = 1 - self.progress;
@@ -454,7 +418,14 @@ function initGSAP() {
   );
 
   sections.forEach(section => {
-    const children = section.querySelectorAll('.container > *, .founder__inner > *, .service-detail__inner > *, .contact-grid > *, .cta-banner__inner > *');
+    let children = Array.from(section.querySelectorAll('.container > *, .founder__inner > *, .service-detail__inner > *, .contact-grid > *, .cta-banner__inner > *'));
+    // The services heading has its own fly-in above, which parks it at
+    // opacity 0 until its trigger fires. A gsap.from() here would read
+    // that 0 as the heading's natural value and animate 0 -> 0, leaving
+    // it permanently invisible — so hand that element to the fly-in only.
+    if (section.classList.contains('services-overview')) {
+      children = children.filter(el => !el.classList.contains('section-title'));
+    }
     if (children.length === 0) return;
 
     if (section.classList.contains('cta-banner')) {
@@ -551,29 +522,44 @@ function initGSAP() {
 
 /* ========== VANTA.JS HERO BACKGROUND ========== */
 function initVanta() {
-  if (typeof VANTA === 'undefined') return;
+  if (typeof IRELAND_NET === 'undefined') return;
   const el = document.getElementById('vanta-bg');
   if (!el) return;
 
-  // Destroy existing instance if re-initializing after Barba transition
   if (window.__vantaEffect) {
     window.__vantaEffect.destroy();
   }
 
-  window.__vantaEffect = VANTA.NET({
+  // On phones the copy is pinned to the BOTTOM of the hero (see the
+  // max-width:700px block in agentic.css) and the island rides up into
+  // the top half just under the navbar, so the two never overlap and the
+  // net can run vivid. Positive offsetY is up; world y points up.
+  var narrow = window.matchMedia('(max-width: 700px)');
+  function islandOffsetY() { return narrow.matches ? 0.18 : -0.04; }
+  // 25% smaller on phones so the net sits comfortably above the copy
+  function islandScale() { return narrow.matches ? 0.75 : 1; }
+  // Phones stack copy under the net, so the island wants to be dead
+  // centre; only the desktop side-by-side layout pushes it right.
+  function islandOffsetX() { return narrow.matches ? 0 : 0.24; }
+
+  window.__vantaEffect = IRELAND_NET({
     el: el,
-    mouseControls: true,
-    touchControls: true,
-    gyroControls: false,
-    minHeight: 200.00,
-    minWidth: 200.00,
-    scale: 1.00,
-    scaleMobile: 1.00,
-    color: 0x22c55e,
-    backgroundColor: 0x010102,
-    points: 8.00,
-    maxDistance: 22.00,
-    spacing: 18.00,
+    color: 0x16a34a,
+    backgroundColor: 0xffffff,
+    // Slightly smaller than the default 85 and nudged down (negative =
+    // down; world y is up) so the island's north coast clears the navbar.
+    islandSize: 78,
+    // passed as functions: re-resolved whenever the effect rebuilds on
+    // resize, so rotating a phone lands the island in the right place
+    offsetX: islandOffsetX,
+    offsetY: islandOffsetY,
+    sizeScale: islandScale,
+    // half speed — the dots/lines drift rather than shimmer
+    motion: 0.5,
+    depth: 2.5,
+    tiltDeg: 0,
+    lineGrey: 1,
+    lineAlpha: 2,
     showDots: true,
   });
 }
@@ -958,15 +944,9 @@ function initCtaAscii() {
 
     for (var i = particles.length - 1; i >= 0; i--) {
       var p = particles[i];
-      var elapsed = (performance.now() - startTime) / 1000;
-      var speedMult;
-      if (elapsed < 2.5) {
-        speedMult = 0.5 + 2.5 * (elapsed / 2.5);
-      } else if (elapsed < 3) {
-        speedMult = 3 + 5 * ((elapsed - 2.5) / 0.5);
-      } else {
-        speedMult = 8;
-      }
+      // Constant speed from the first frame — the field hits as a moment
+      // rather than ramping up (was a 3s ease from 0.5x to 8x).
+      var speedMult = 5.33;
       p.y -= p.speed * 0.12 * speedMult;
       var yPct = 1 - (p.y / rows);
 

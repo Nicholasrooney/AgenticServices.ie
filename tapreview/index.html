@@ -17,12 +17,14 @@
   <meta name="twitter:card" content="summary_large_image">
 
   <!-- Favicon (matches main site) -->
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23010102'/><text x='6' y='24' font-family='sans-serif' font-weight='700' font-size='22' fill='%2322c55e'>A</text></svg>">
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
 
   <!-- Fonts (same pairing as the main site) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Poppins:wght@500;600&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 
   <!-- Structured data -->
   <script type="application/ld+json">
@@ -43,7 +45,7 @@
     "name": "Agentic Services",
     "url": "https://agenticservices.ie/",
     "brand": "TapReview",
-    "telephone": "+353834641587"
+    "telephone": "+353868786928"
   }
   </script>
 
@@ -139,7 +141,33 @@
     .hero__ticks { display: flex; flex-wrap: wrap; gap: 8px 20px; list-style: none; }
     .hero__ticks li { display: flex; align-items: center; gap: 7px; font-size: 0.82rem; color: var(--ink-subtle); }
     .hero__ticks li::before { content: '✓'; color: var(--primary); font-weight: 700; }
-    .hero__photo img { width: 100%; height: auto; }
+    .hero__photo { position: relative; }
+    .hero__photo img { width: 100%; height: auto; transition: opacity 0.45s ease; }
+    /* HERO 3D (progressive): canvas fades in over the static image once
+       the scene is ready; without JS/WebGL the image simply remains. */
+    .hero__photo canvas {
+      position: absolute;
+      inset: 0;
+      width: 100% !important;
+      height: 100% !important;
+      opacity: 0;
+      transition: opacity 0.6s ease;
+      touch-action: pan-y;
+    }
+    .hero__photo.is-3d canvas { opacity: 1; }
+    .hero__photo.is-3d img { opacity: 0; }
+    .hero3d-shadow {
+      position: absolute;
+      left: 50%; bottom: 7%;
+      width: 66%; height: 8%;
+      transform: translateX(-50%);
+      background: radial-gradient(ellipse at center, rgba(14, 17, 22, 0.16) 0%, transparent 66%);
+      filter: blur(6px);
+      opacity: 0;
+      transition: opacity 0.6s ease;
+      pointer-events: none;
+    }
+    .hero__photo.is-3d .hero3d-shadow { opacity: 1; }
 
     /* ---- The journey: loved it → tap → review screen ---- */
     .journey {
@@ -273,40 +301,67 @@
       width: 62px; margin-left: auto;
     }
 
-    /* Friction comparison */
-    .friction {
+    /* ---- Story section (image-led journey) ---- */
+    .story {
       margin-top: clamp(2.5rem, 5vw, 3.5rem);
-      background: #fff; border: 1px solid var(--hairline); border-radius: var(--radius-lg);
-      padding: clamp(20px, 3vw, 30px);
-      display: flex; flex-direction: column; gap: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: clamp(3rem, 6vw, 5rem);
     }
-    .friction__row { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
-    .friction__tag {
-      flex-shrink: 0; width: 128px;
-      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
-      color: var(--ink-tertiary);
+    .story__step {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: clamp(2rem, 4vw, 3.5rem);
+      align-items: center;
     }
-    .friction__tag--green { color: var(--primary); }
-    .friction__chain { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-    .friction__chain span {
-      border: 1px solid var(--hairline); border-radius: 100px;
-      padding: 6px 14px; font-size: 0.78rem; color: var(--ink-subtle);
-      background: var(--surface-1);
+    .story__step--flip { direction: rtl; }
+    .story__step--flip > * { direction: ltr; }
+    .story__img {
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid var(--hairline);
     }
-    .friction__chain i { font-style: normal; color: var(--ink-tertiary); font-size: 0.75rem; }
-    .friction__quit {
-      border-style: dashed !important;
-      color: var(--ink-tertiary) !important;
-      background: transparent !important;
-      font-style: italic;
+    .story__img img {
+      width: 100%;
+      height: auto;
+      display: block;
     }
-    .friction__row--new .friction__chain span {
-      border-color: rgba(22, 163, 74, 0.35);
-      background: rgba(22, 163, 74, 0.07);
+    .story__copy {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .story__num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(22, 163, 74, 0.1);
+      color: var(--primary);
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+    .story__title {
+      font-size: clamp(1.2rem, 2.4vw, 1.5rem);
       color: var(--ink);
-      font-weight: 500;
+      margin-top: 4px;
     }
-    .friction__row--new .friction__chain i { color: var(--primary); }
+    .story__copy p {
+      font-size: 0.95rem;
+      line-height: 1.65;
+      max-width: 400px;
+    }
+    @media (max-width: 768px) {
+      .story__step,
+      .story__step--flip {
+        grid-template-columns: 1fr;
+        direction: ltr;
+      }
+      .story__copy { padding: 0 4px; }
+    }
 
     /* ---- Live counter ---- */
     .counter { text-align: center; max-width: 620px; }
@@ -352,6 +407,19 @@
     .order__ticks li { display: flex; gap: 10px; font-size: 0.94rem; color: var(--ink-muted); }
     .order__ticks li::before { content: '✓'; color: var(--primary); font-weight: 700; flex-shrink: 0; }
     .order__reassure { font-size: 0.84rem; color: var(--ink-tertiary); }
+    /* Ordering isn't open yet — this notice sets the expectation before
+       the form, which collects enquiries rather than orders. */
+    .order__soon {
+      background: rgba(22, 163, 74, 0.07);
+      border: 1px solid rgba(22, 163, 74, 0.25);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      margin-bottom: 18px;
+      font-size: 0.92rem;
+      color: var(--ink-muted);
+      line-height: 1.5;
+    }
+    .order__soon strong { color: var(--primary-focus); }
     .order__wa {
       display: inline-flex; align-items: center; gap: 8px;
       margin-top: 22px; padding: 12px 20px;
@@ -399,10 +467,32 @@
     }
     .form__fine { font-size: 0.78rem; color: var(--ink-tertiary); text-align: center; }
 
-    /* ---- CTA band ---- */
-    .band { background: var(--ink); border-radius: var(--radius-xl); padding: clamp(2.5rem, 5vw, 4rem); text-align: center; }
-    .band h2 { color: #fff; font-size: clamp(1.5rem, 3vw, 2.1rem); margin-bottom: 8px; }
-    .band p { color: rgba(255, 255, 255, 0.6); margin-bottom: 26px; }
+    /* ---- CTA band — liquid glass over the rising energy field,
+       matching the CTA card on the main site pages ---- */
+    .cta-field { position: relative; overflow: hidden; }
+    .cta-field .wrap { position: relative; z-index: 1; }
+    .cta-ascii {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      pointer-events: none; z-index: 0;
+    }
+    .band {
+      background: linear-gradient(135deg,
+        rgba(255, 255, 255, 0.15) 0%,
+        rgba(255, 255, 255, 0.05) 100%);
+      -webkit-backdrop-filter: blur(7px) saturate(1.5);
+      backdrop-filter: blur(7px) saturate(1.5);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      box-shadow:
+        0 24px 60px -32px rgba(15, 23, 42, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.85),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.25);
+      border-radius: var(--radius-xl); padding: clamp(2.5rem, 5vw, 4rem); text-align: center;
+    }
+    @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+      .band { background: rgba(255, 255, 255, 0.92); }
+    }
+    .band h2 { color: var(--ink); font-size: clamp(1.5rem, 3vw, 2.1rem); margin-bottom: 8px; }
+    .band p { color: var(--ink-subtle); margin-bottom: 26px; }
 
     /* ---- Footer ---- */
     .foot { border-top: 1px solid var(--hairline); padding: 34px 0; }
@@ -434,8 +524,6 @@
       .journey__arrow { padding: 6px 0; transform: rotate(90deg); }
       .scene__visual { height: 260px; }
       .scene__label { padding: 12px 4px 18px; text-align: center; }
-      .friction__row { flex-direction: column; align-items: flex-start; gap: 10px; }
-      .friction__tag { width: auto; }
       .field-row { flex-direction: column; }
       .mobile-cta { display: flex; }
       body { padding-bottom: 70px; }
@@ -453,7 +541,7 @@
       <span class="top__brand">Tap<span>Review</span></span>
       <span class="top__by">by <a href="../index.html">Agentic Services</a></span>
     </div>
-    <a href="#order" class="btn btn--primary">Order cards</a>
+    <a href="#order" class="btn btn--primary">Get in touch</a>
   </div>
 </header>
 
@@ -466,7 +554,7 @@
       <h1>Turn your happy customers into <em>5-star Google reviews.</em></h1>
       <p class="hero__sub">A small card on your counter. Customers tap it with their phone and your Google review page opens while they're still smiling at the till.</p>
       <div class="hero__cta">
-        <a href="#order" class="btn btn--primary btn--lg">Order my cards</a>
+        <a href="#order" class="btn btn--primary btn--lg">Enquire now</a>
         <a href="#how" class="btn btn--secondary btn--lg">See how it works</a>
       </div>
       <ul class="hero__ticks">
@@ -478,6 +566,7 @@
       <img src="images/product-hero.png"
            alt="TapReview Google review card stand: tap with NFC or scan the QR code to leave a 5-star review"
            width="1120" height="1301" fetchpriority="high">
+      <div class="hero3d-shadow" aria-hidden="true"></div>
     </div>
   </div>
 </section>
@@ -486,116 +575,42 @@
 <section class="section section--tint" id="how">
   <div class="wrap">
     <span class="eyebrow reveal">How it works</span>
-    <h2 class="section-title reveal">From "thanks a million"<br>to five stars — in one tap.</h2>
-    <p class="section-lede reveal">Your happiest customers are standing in front of you every day. The card catches them there and then, and puts the review screen straight into their hand.</p>
 
-    <div class="journey">
+    <div class="story">
 
-      <!-- Scene 1: they love your work -->
-      <div class="scene reveal">
-        <div class="scene__visual">
-          <div class="bubble-scene">
-            <div class="bubble bubble--them">Brilliant job, thanks a million! 🙌</div>
-            <div class="bubble bubble--stars">
-              <svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.7-5.1 4.6 1.4 6.8L12 17.8 5.9 20.4l1.4-6.8L2.2 9l6.9-.7z"/></svg>
-              A five-star moment, about to walk out the door
-            </div>
-          </div>
+      <div class="story__step reveal">
+        <div class="story__img">
+          <img src="images/journey-1-awkward-ask.png" alt="Café owner awkwardly asking a customer for a Google review as they leave" width="1600" height="1200" loading="lazy">
         </div>
-        <div class="scene__label">
-          <strong><b>1</b>They love your service</strong>
-          <p>A customer pays up, delighted. This is where reviews are won, and where they're normally lost.</p>
+        <div class="story__copy">
+          <span class="story__num">1</span>
+          <h3 class="story__title">The ask nobody makes</h3>
+          <p>Asking for a review is awkward, so it doesn't happen. The customer loved what you did — but between searching, signing in, and finding the right page, the moment's gone before they reach the door.</p>
         </div>
       </div>
 
-      <div class="journey__arrow" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
-      </div>
-
-      <!-- Scene 2: the card on the counter -->
-      <div class="scene reveal">
-        <div class="scene__visual">
-          <div class="minicard">
-            <span class="ripple" aria-hidden="true"></span>
-            <div class="minicard__dots" aria-hidden="true">
-              <i style="background:#4285f4"></i><i style="background:#ea4335"></i><i style="background:#fbbc04"></i><i style="background:#34a853"></i>
-            </div>
-            <span class="minicard__ask">Leave us a review</span>
-            <div class="minicard__stars" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.7-5.1 4.6 1.4 6.8L12 17.8 5.9 20.4l1.4-6.8L2.2 9l6.9-.7z"/></svg>
-              <svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.7-5.1 4.6 1.4 6.8L12 17.8 5.9 20.4l1.4-6.8L2.2 9l6.9-.7z"/></svg>
-              <svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.7-5.1 4.6 1.4 6.8L12 17.8 5.9 20.4l1.4-6.8L2.2 9l6.9-.7z"/></svg>
-              <svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.7-5.1 4.6 1.4 6.8L12 17.8 5.9 20.4l1.4-6.8L2.2 9l6.9-.7z"/></svg>
-              <svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.7-5.1 4.6 1.4 6.8L12 17.8 5.9 20.4l1.4-6.8L2.2 9l6.9-.7z"/></svg>
-            </div>
-            <div class="minicard__nfc">
-              <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="3" fill="#16a34a"/><path d="M24 13a11 11 0 0 1 11 11M24 18a6 6 0 0 1 6 6" fill="none" stroke="#16a34a" stroke-width="3" stroke-linecap="round"/><path d="M24 35a11 11 0 0 1-11-11M24 30a6 6 0 0 1-6-6" fill="none" stroke="#16a34a" stroke-width="3" stroke-linecap="round" opacity=".35"/></svg>
-              <em>Tap here</em>
-            </div>
-          </div>
+      <div class="story__step story__step--flip reveal">
+        <div class="story__img">
+          <img src="images/journey-2-one-tap.png" alt="Customer effortlessly tapping their phone on the TapReview card on the counter" width="1600" height="1200" loading="lazy">
         </div>
-        <div class="scene__label">
-          <strong><b>2</b>They tap the card</strong>
-          <p>It's sitting on the counter. One tap of their phone, or a scan of the QR code, and it's done its job.</p>
+        <div class="story__copy">
+          <span class="story__num">2</span>
+          <h3 class="story__title">The card does the asking</h3>
+          <p>It sits on the counter. One tap of their phone against it — or a quick scan of the QR — and your Google review page opens on their screen. No conversation required.</p>
         </div>
       </div>
 
-      <div class="journey__arrow" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
-      </div>
-
-      <!-- Scene 3: the review screen, already open -->
-      <div class="scene reveal">
-        <div class="scene__visual">
-          <div class="phone">
-            <div class="phone__screen">
-              <div class="gsheet__head">
-                <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.27-4.74 3.27-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84A11 11 0 0 0 12 23z"/><path fill="#FBBC05" d="M5.84 14.1a6.6 6.6 0 0 1 0-4.2V7.06H2.18a11 11 0 0 0 0 9.88l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15A11 11 0 0 0 12 1 11 11 0 0 0 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
-                Rate and review
-              </div>
-              <div class="gsheet__biz">
-                <span class="gsheet__avatar">M</span>
-                <div><strong>Murphy's Café</strong><em>Posting publicly across Google</em></div>
-              </div>
-              <div class="gsheet__stars" aria-hidden="true">
-                <svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.7-5.1 4.6 1.4 6.8L12 17.8 5.9 20.4l1.4-6.8L2.2 9l6.9-.7z"/></svg>
-                <svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.7-5.1 4.6 1.4 6.8L12 17.8 5.9 20.4l1.4-6.8L2.2 9l6.9-.7z"/></svg>
-                <svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.7-5.1 4.6 1.4 6.8L12 17.8 5.9 20.4l1.4-6.8L2.2 9l6.9-.7z"/></svg>
-                <svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.7-5.1 4.6 1.4 6.8L12 17.8 5.9 20.4l1.4-6.8L2.2 9l6.9-.7z"/></svg>
-                <svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.7-5.1 4.6 1.4 6.8L12 17.8 5.9 20.4l1.4-6.8L2.2 9l6.9-.7z"/></svg>
-              </div>
-              <div class="gsheet__field">Share details of your own experience…</div>
-              <div class="gsheet__post">Post</div>
-            </div>
-          </div>
+      <div class="story__step reveal">
+        <div class="story__img">
+          <img src="images/journey-3-five-stars.png" alt="Customer's phone showing five gold stars on the Google review screen, owner giving thumbs up in background" width="1600" height="1200" loading="lazy">
         </div>
-        <div class="scene__label">
-          <strong><b>3</b>The review screen is already open</strong>
-          <p>Not your website, not a search box. The actual Google review box for your business, stars waiting to be filled in.</p>
+        <div class="story__copy">
+          <span class="story__num">3</span>
+          <h3 class="story__title">Five stars, done</h3>
+          <p>The review screen is already open, stars waiting. They tap the fifth one, hit post, and it's live on Google — ten seconds, start to finish.</p>
         </div>
       </div>
 
-    </div>
-
-    <!-- The friction they skip -->
-    <div class="friction reveal">
-      <div class="friction__row friction__row--old">
-        <span class="friction__tag">Without the card</span>
-        <div class="friction__chain">
-          <span>Search for your business</span><i>→</i>
-          <span>Pick the right listing</span><i>→</i>
-          <span>Find the review button</span><i>→</i>
-          <span>Sign in</span><i>→</i>
-          <span class="friction__quit">…most people give up here</span>
-        </div>
-      </div>
-      <div class="friction__row friction__row--new">
-        <span class="friction__tag friction__tag--green">With the card</span>
-        <div class="friction__chain">
-          <span>Tap</span><i>→</i>
-          <span>Review posted</span>
-        </div>
-      </div>
     </div>
   </div>
 </section>
@@ -632,12 +647,13 @@
 </section>
 
 <!-- ============ CTA BAND ============ -->
-<section class="section">
+<section class="section cta-field">
+  <canvas class="cta-ascii" aria-hidden="true"></canvas>
   <div class="wrap">
     <div class="band reveal">
       <h2>Your happiest customers are ready to say so.</h2>
       <p>Give them the one tap that makes it easy.</p>
-      <a href="#order" class="btn btn--primary btn--lg">Order my cards</a>
+      <a href="#order" class="btn btn--primary btn--lg">Enquire about cards</a>
     </div>
   </div>
 </section>
@@ -666,26 +682,27 @@
 <section class="section" id="order">
   <div class="wrap order__grid">
     <div class="reveal">
-      <span class="eyebrow">Order</span>
+      <span class="eyebrow">Enquiries</span>
       <h2 class="section-title">Let's get your reviews moving.</h2>
-      <p class="section-lede">Tell us where the cards are going and we do the rest. Each one arrives already linked to your Google review page, ready to stand up out of the box. We confirm every order personally within one working day.</p>
+      <p class="order__soon"><strong>Online ordering is coming soon.</strong> In the meantime tell us what you need, or message us directly, and we'll arrange everything with you personally.</p>
+      <p class="section-lede">Each card arrives already linked to your Google review page, ready to stand up out of the box. We reply to every enquiry within one working day.</p>
       <ul class="order__ticks">
         <li>Linked to your exact Google page before it ships</li>
         <li>No app for you or your customers</li>
         <li>No subscription — you own the cards</li>
         <li>Delivered ready to use, anywhere in Ireland</li>
       </ul>
-      <p class="order__reassure">No payment online. We confirm the details and arrange everything with you directly first.</p>
-      <a class="order__wa" href="https://wa.me/353834641587">
+      <p class="order__reassure">No payment taken online. This is an enquiry only — we confirm the details and pricing with you first.</p>
+      <a class="order__wa" href="https://wa.me/353868786928">
         <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.4 14.2c-.2.6-1.2 1.2-1.7 1.2-.4.1-1 .1-1.6-.1a13 13 0 0 1-1.5-.5c-2.6-1.1-4.3-3.7-4.4-3.9-.1-.2-1-1.4-1-2.6s.6-1.8.9-2c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.4l.9 2.2c.1.2.1.4 0 .6l-.4.6-.4.5c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1.1 2.2 1.4 2.5 1.5.3.2.5.1.7-.1l1-1.2c.2-.3.4-.2.7-.1l2.1 1c.3.2.5.3.6.4.1.2.1.7-.2 1.2z"/></svg>
         Prefer to just message? WhatsApp us
       </a>
     </div>
 
     <div class="reveal">
-      <!-- Formspree: create a form for Agentic Services and replace YOUR_FORM_ID -->
-      <form class="form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-        <p class="form__title">Order your cards</p>
+      <form class="form" action="https://formspree.io/f/mpqvkrwe" method="POST">
+        <input type="hidden" name="_subject" value="TapReview enquiry — agenticservices.ie">
+        <p class="form__title">Register your interest</p>
         <label class="field">
           <span>Business name</span>
           <input type="text" name="business" required autocomplete="organization" placeholder="e.g. The Corner Café">
@@ -705,7 +722,7 @@
           <input type="email" name="email" required autocomplete="email" placeholder="you@business.ie">
         </label>
         <fieldset class="qty">
-          <legend>How many cards?</legend>
+          <legend>How many cards are you thinking?</legend>
           <div class="qty__opts">
             <label class="qty__opt"><input type="radio" name="quantity" value="1"><span>1</span></label>
             <label class="qty__opt"><input type="radio" name="quantity" value="2" checked><em>Most popular</em><span>2</span></label>
@@ -714,15 +731,15 @@
           </div>
         </fieldset>
         <label class="field">
-          <span>Delivery address</span>
-          <textarea name="address" rows="2" required placeholder="Where should we send them?"></textarea>
+          <span>Delivery address <i>(optional)</i></span>
+          <textarea name="address" rows="2" placeholder="Where would we send them?"></textarea>
         </label>
         <label class="field">
           <span>Anything else? <i>(optional)</i></span>
           <input type="text" name="notes" placeholder="Google page link, questions…">
         </label>
-        <button type="submit" class="btn btn--primary btn--block btn--lg">Place my order</button>
-        <p class="form__fine">We'll be in touch within one working day.</p>
+        <button type="submit" class="btn btn--primary btn--block btn--lg">Send my enquiry</button>
+        <p class="form__fine">We'll be in touch within one working day. No payment needed now.</p>
       </form>
     </div>
   </div>
@@ -738,16 +755,33 @@
       <p class="foot__copy">A product by <a href="../index.html" style="border-bottom:1px solid var(--hairline-strong)">Agentic Services</a> · Ireland</p>
     </div>
     <div class="foot__links">
-      <a href="tel:+353834641587">083 464 1587</a>
-      <a href="https://wa.me/353834641587">WhatsApp</a>
-      <a href="#order">Order cards</a>
+      <a href="tel:+353868786928">086 878 6928</a>
+      <a href="https://wa.me/353868786928">WhatsApp</a>
+      <a href="#order">Enquire</a>
     </div>
     <span class="foot__copy">© <span id="year">2026</span> Agentic Services</span>
   </div>
 </footer>
 
 <!-- Sticky mobile CTA -->
-<a href="#order" class="mobile-cta">Order my cards</a>
+<a href="#order" class="mobile-cta">Enquire now</a>
+
+<!-- ============================================================
+     HERO 3D — live 3D product stand replacing the static hero image
+     (progressive; the image is the permanent fallback).
+     REVERT: delete this block + js/hero3d.js + the .hero3d CSS rules.
+     ============================================================ -->
+<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module" src="js/hero3d.js"></script>
+<!-- ===================== end HERO 3D ========================= -->
 
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
@@ -765,6 +799,98 @@
     });
   }, { threshold: 0.12 });
   document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+
+  // CTA energy field — rising €/$/↑ symbols behind the glass band.
+  // Ported from initCtaAscii in ../js/main.js (constant 4x speed).
+  (function () {
+    var canvas = document.querySelector('.cta-ascii');
+    if (!canvas) return;
+    var ctx = canvas.getContext('2d');
+    var section = canvas.closest('.cta-field');
+
+    var chars = ['$', '€', '£', '%', '↑', '+', '×', '·', '▲', '⬆', '∞'];
+    var cols, rows, fontSize = 14;
+    var particles = [];
+    var animId;
+
+    function resize() {
+      var rect = section.getBoundingClientRect();
+      canvas.width = rect.width;
+      canvas.height = rect.height;
+      cols = Math.floor(canvas.width / fontSize);
+      rows = Math.floor(canvas.height / fontSize);
+    }
+
+    function spawnParticle() {
+      particles.push({
+        x: Math.random() * cols | 0,
+        y: rows + Math.random() * 4,
+        speed: 0.2 + Math.random() * 0.5,
+        char: chars[Math.random() * chars.length | 0]
+      });
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.font = fontSize + 'px monospace';
+      ctx.textAlign = 'center';
+
+      for (var i = particles.length - 1; i >= 0; i--) {
+        var p = particles[i];
+        p.y -= p.speed * 0.12 * 5.33; // constant speed, matches main site
+        var yPct = 1 - (p.y / rows);
+
+        var fade;
+        if (yPct < 0.05) fade = yPct / 0.05;
+        else if (yPct < 0.4) fade = 1;
+        else if (yPct < 0.93) fade = 1 - ((yPct - 0.4) / 0.53);
+        else fade = 0;
+
+        if (p.y < 0 || fade <= 0) { particles.splice(i, 1); continue; }
+
+        var r, g, b, t;
+        if (yPct < 0.7) {
+          t = yPct / 0.7;
+          r = Math.floor(10 + 24 * t);
+          g = Math.floor(80 + 117 * t);
+          b = Math.floor(20 + 74 * t);
+        } else {
+          t = Math.min(1, (yPct - 0.7) / 0.23);
+          r = Math.floor(34 + 186 * t);
+          g = Math.floor(197 + 58 * t);
+          b = Math.floor(94 + 136 * t);
+        }
+
+        ctx.globalAlpha = fade * 0.9;
+        ctx.fillStyle = 'rgb(' + r + ',' + g + ',' + b + ')';
+        ctx.fillText(p.char, p.x * fontSize + fontSize / 2, p.y * fontSize);
+
+        if (Math.random() < 0.04) p.char = chars[Math.random() * chars.length | 0];
+      }
+
+      ctx.globalAlpha = 1;
+
+      var spawnRate = Math.min(cols * 1.5, 50);
+      for (var s = 0; s < spawnRate; s++) {
+        if (Math.random() < 0.8) spawnParticle();
+      }
+
+      animId = requestAnimationFrame(draw);
+    }
+
+    var fieldObserver = new IntersectionObserver(function (entries) {
+      if (entries[0].isIntersecting) {
+        resize();
+        if (!animId) draw();
+      } else if (animId) {
+        cancelAnimationFrame(animId);
+        animId = null;
+      }
+    }, { threshold: 0.1 });
+
+    fieldObserver.observe(section);
+    addEventListener('resize', resize);
+  })();
 
   // Review counter — spins up once when scrolled into view
   var counterEl = document.getElementById('revCount');

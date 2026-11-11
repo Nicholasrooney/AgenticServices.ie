@@ -1,5 +1,9 @@
-# Temporary dev deployment — keep search engines out.
-# IMPORTANT: replace with an allow-all robots.txt (+ sitemap) when
-# launching on the real agenticservices.ie domain.
 User-agent: *
-Disallow: /
+Allow: /
+
+# Parked pages — hidden from the nav until their content is finished.
+# These also carry a noindex meta tag; this is belt and braces.
+Disallow: /work.html
+Disallow: /pricing.html
+
+Sitemap: https://agenticservices.ie/sitemap.xml

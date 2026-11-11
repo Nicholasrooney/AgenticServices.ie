@@ -6,42 +6,15 @@
 
 .logo-marquee {
   position: relative;
-  padding-block: clamp(1.5rem, 3vw, 2.75rem);
+  /* Tall enough that, combined with the scroll "focus" scale-up and
+     downward parallax in wow.js, the strip owns the viewport for a
+     good stretch of scroll before it's finally passed. */
+  padding-block: clamp(5rem, 12vw, 10rem);
   background: var(--canvas);
-  border-top: 1px solid var(--hairline);
-  border-bottom: 1px solid var(--hairline);
   overflow: hidden;
-}
-
-/* Reveal-on-scroll: pure CSS scroll-driven animation. The strip stays
-   hidden until it scrolls into view, then fades up. Falls back to fully
-   visible where view timelines or motion aren't supported, so it can
-   never get stuck invisible. */
-@media (prefers-reduced-motion: no-preference) {
-  @supports (animation-timeline: view()) {
-    .logo-marquee {
-      animation: lm-reveal linear both;
-      animation-timeline: view();
-      animation-range: entry 0% entry 70%;
-    }
-  }
-}
-@keyframes lm-reveal {
-  from { opacity: 0; transform: translateY(18px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-.logo-marquee__head {
-  text-align: center;
-  margin-bottom: clamp(1rem, 2vw, 1.75rem);
-}
-
-/* Viewport clips the track and feathers both edges so logos
-   fade in and out as they scroll on/off screen. */
-.logo-marquee__viewport {
-  position: relative;
-  width: 100%;
-  overflow: hidden;
+  /* Edge feather lives HERE (not on the viewport) so it stays pinned
+     to the screen edges while wow.js scales the viewport up — logos
+     always dissolve at the edges instead of hard-clipping. */
   -webkit-mask-image: linear-gradient(
     to right,
     transparent 0%,
@@ -58,6 +31,61 @@
   );
 }
 
+/* Reveal-on-scroll: pure CSS scroll-driven animation. The strip stays
+   hidden until it scrolls into view, then fades up. Falls back to fully
+   visible where view timelines or motion aren't supported, so it can
+   never get stuck invisible. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .logo-marquee {
+      /* fill "backwards", not "both": once the entry range has played,
+         the animation must release opacity so the JS scroll-off fade
+         (section fade-to-white in main.js) can take over. */
+      animation: lm-reveal linear backwards;
+      animation-timeline: view();
+      animation-range: entry 0% entry 70%;
+    }
+  }
+}
+@keyframes lm-reveal {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* The brands strip sits directly under the hero — pull it up so it's
+   already apparent after a short scroll. */
+.hero + .logo-marquee {
+  padding-top: clamp(1.5rem, 3vw, 3rem);
+}
+
+/* Whatever follows a strip needs extra room: the strip grows to ~2.35x
+   as it's scrolled past and must not crowd the next section. */
+.logo-marquee + * {
+  padding-top: clamp(5rem, 10vw, 9rem);
+}
+
+.logo-marquee__head {
+  text-align: center;
+  /* Generous gap: the strip below grows to ~2.35x on scroll and
+     expands upward toward this heading as it does. */
+  margin-bottom: clamp(2.5rem, 5vw, 4.5rem);
+}
+
+/* Stacked rows (the tools strip runs three). */
+.logo-marquee__rows {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.75rem, 1.6vw, 1.4rem);
+}
+
+/* Viewport clips the track; the edge feather is on .logo-marquee
+   above so it survives the wow.js scale-up. */
+.logo-marquee__viewport {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
 /* The moving track. JS clones the set so the second half is an
    exact copy of the first; translating -50% loops seamlessly. */
 .logo-marquee__track {
@@ -70,11 +98,6 @@
 @keyframes lm-scroll {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
-}
-
-/* Pause for a closer look. */
-.logo-marquee__viewport:hover .logo-marquee__track {
-  animation-play-state: paused;
 }
 
 /* ---- Individual logo slot ---- */
@@ -287,6 +310,29 @@
   font-size: 0.95rem;
   letter-spacing: -0.005em;
   color: #353b44;
+}
+
+/* ============================================================
+   Phones. The strip barely swells here (see wow.js), so it needs
+   far less breathing room than the desktop composition, and the
+   edge feather is pulled in so more logos stay whole on a 375px
+   screen instead of being chopped mid-word.
+   ============================================================ */
+@media (max-width: 700px) {
+  .logo-marquee {
+    padding-block: 3rem;
+    -webkit-mask-image: linear-gradient(to right,
+      transparent 0%, #000 7%, #000 93%, transparent 100%);
+    mask-image: linear-gradient(to right,
+      transparent 0%, #000 7%, #000 93%, transparent 100%);
+  }
+  .hero + .logo-marquee { padding-top: 1.25rem; }
+  .logo-marquee + * { padding-top: 3.5rem; }
+  .logo-marquee__head { margin-bottom: 1.5rem; }
+  .logo-marquee__rows { gap: 0.6rem; }
+  /* tighter slots so more logos fit across a narrow screen */
+  .toolmark { padding-inline: 1.1rem; }
+  .brandmark { padding-inline: 1.2rem; }
 }
 
 /* ---- Reduced motion: hold the strip still and fully visible ---- */

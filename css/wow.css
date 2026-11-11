@@ -1,0 +1,17 @@
+/* ============================================================
+   Agentic Services — WOW PASS (Tier 1). EXPERIMENTAL LAYER.
+   Revert: delete this file + js/wow.js + the marked block at the
+   bottom of index.html. Nothing else references them.
+   ============================================================ */
+
+/* Parallax wrapper injected around folio screenshots (JS-created) */
+.wow-par {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: inherit;
+}
+
+/* SplitText line masks get inline overflow from GSAP; nothing needed here.
+   Marquee viewports get skew via inline transform; promote to own layer. */
+.logo-marquee__viewport { will-change: transform; }
