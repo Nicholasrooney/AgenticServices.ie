@@ -1,6 +1,15 @@
 /* Showcase picker: a searchable "Demos" dropdown in the nav (all pages). */
 (function () {
-  var SITES = window.AGENTIC_SHOWCASE || [];
+  var SITES = [];
+  // The list is loaded with a changing query string so a new demo shows up
+  // straight away (Hostinger tells browsers to cache .js files for 7 days).
+  function load(cb) {
+    var s = document.createElement('script');
+    s.src = '/js/showcase-sites.js?t=' + Math.floor(Date.now() / 300000);
+    s.onload = function () { SITES = window.AGENTIC_SHOWCASE || []; cb(); };
+    s.onerror = function () { SITES = window.AGENTIC_SHOWCASE || []; cb(); };
+    document.head.appendChild(s);
+  }
   function init() {
     var inner = document.querySelector('.nav__inner');
     if (!inner || document.querySelector('.sc')) return;
@@ -41,5 +50,6 @@
     });
     document.addEventListener('click', function (e) { if (!wrap.contains(e.target)) open(false); });
   }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+  function start() { load(init); }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
 })();
